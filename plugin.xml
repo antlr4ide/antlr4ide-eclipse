@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            name="Antlr v4 Editor"
+            extensions="g4"
+            icon="icons/g.png"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            class="org.github.antlr4ide.editor.ANTLRv4Editor"
+            id="org.github.antlr4ide.editor.ANTLRv4Editor">
+      </editor>
+   </extension>
+
+</plugin>

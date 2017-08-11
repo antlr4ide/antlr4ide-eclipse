@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="java/" kind="src" path="src-antlr"/>
+	<classpathentry kind="src" path="target/generated-sources/antlr4"/>
+	<classpathentry excluding="antr4lexer/" kind="src" path="test"/>
+	<classpathentry kind="lib" path="lib/antlr4-4.5.2-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
