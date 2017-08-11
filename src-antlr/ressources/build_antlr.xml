@@ -1,0 +1,79 @@
+<project name="ANTLR4 Build Script" basedir="." default="build">
+	<!-- http://www.simonwhatley.co.uk/using-ant-with-eclipse -->
+	<!-- https://theantlrguy.atlassian.net/wiki/display/ANTLR3/How+to+use+ant+with+ANTLR3 -->
+	<!--  Load properties  -->
+	<property file="build.properties" />
+	<property name="lib.dir" value="../../lib" />
+	<!--  Load task definitions e.g. FTP  -->
+	<path id="class.path">
+		<fileset dir="${lib.dir}" includes="*.jar" />
+<!-- 		<fileset dir="." includes=".antlr-generator-3.2.0-patch.jar" /> -->
+		<fileset dir="D:/Downloads/eclipse-jee-neon-3-win32-x86_64/eclipse/plugins" includes="org.antlr.runtime_3.2.0.v201101311130.jar"/>
+	</path>
+	<taskdef file="task.properties" classpathref="class.path" />
+	<!--  Set variables for build directories  -->
+	<property name="build.dir" value="build" />
+	<property name="src.dir" value="src/com/github/jknack/antlr4ide/mylexer/" />
+	<!--
+ set variable for external lib directory 
+	(typically set up as external project within project) 
+-->
+	<target name="-init" depends="clean">
+		<echo>Creating temporary folders...</echo>
+		<mkdir dir="${build.dir}" />
+	</target>
+	<target name="clean" description="Clean up">
+		<echo>Cleaning up...</echo>
+		<delete dir="${build.dir}" />
+	</target>
+	<target name="build" depends="-init" description="Build project">
+		<echo>Invoking antlr tool to build grammar files...</echo>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}" includes="*.g" />
+		</copy>
+		<antcall target="antlr"/>
+		<echo>Copying generated files to location...</echo>
+		<copy todir="${src.dir}">
+			<fileset dir="${build.dir}" includes="*.java" />
+			<fileset dir="${build.dir}" includes="*.tokens" />
+		</copy>
+	</target>
+
+	<!-- java org.antlr.Tool -->
+	<target name="antlr">
+		<java classname="org.antlr.Tool" fork="true" failonerror="true" classpathref="class.path">
+			<arg value="-verbose"/>
+			<arg value="-o"/>
+			<arg path="${build.dir}"/>
+			<arg value="-lib"/>
+			<arg path="${build.dir}"/>
+			<arg path="${build.dir}/MyLexer.g"/>
+		</java>
+	</target>
+
+	<!-- An ant macro which invokes ANTLR3
+	This is just a parameterizable wrapper to simplify the invocation of ANTLR3.
+	The default values can be overriden by assigning a value to an attribute
+	when using the macro.
+	Example with ANTLR3 outputdirectory modified:
+	<antlr3 grammar.name="CMinus.g" outputdirectory="${src}/${package}"/>
+	-->
+	<macrodef name="antlr3">
+		<attribute name="grammar.name" />
+		<attribute name="outputdirectory" default="." />
+		<attribute name="libdirectory" default="." />
+		<sequential>
+			<java classname="org.antlr.Tool" fork="true" failonerror="true">
+				<arg value="-o" />
+				<arg path="@{outputdirectory}" />
+				<arg value="-lib" />
+				<arg path="@{libdirectory}" />
+				<arg value="-verbose" />
+				<arg value="-Xmultithreaded" />
+				<arg value="-make" />
+				<arg path="@{grammar.name}" />
+			</java>
+		</sequential>
+	</macrodef>
+
+</project>
