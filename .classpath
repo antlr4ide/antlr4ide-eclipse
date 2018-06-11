@@ -6,8 +6,8 @@
 	<classpathentry excluding="java/" kind="src" path="src-antlr"/>
 	<classpathentry kind="src" path="target/generated-sources/antlr4"/>
 	<classpathentry excluding="antr4lexer/" kind="src" path="test"/>
-	<classpathentry kind="lib" path="lib/antlr4-4.5.2-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="lib/junit.jar"/>
 	<classpathentry kind="lib" path="lib/org.hamcrest.core_1.3.0.v201303031735.jar"/>
+	<classpathentry kind="lib" path="lib/antlr4-4.7.2-SNAPSHOT-complete.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

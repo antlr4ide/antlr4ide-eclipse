@@ -85,4 +85,5 @@ public abstract class LexerAdaptor extends Lexer {
 	private boolean inParserRule() { // not used, but added for clarity
 		return _currentRuleType == ANTLRv4Lexer.RULE_REF;
 	}
+
 }
