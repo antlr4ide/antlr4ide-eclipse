@@ -1,5 +1,7 @@
-package org.antlr.parser.antlr4;
 // Generated from ANTLRv4Parser.g4 by ANTLR 4.7.1
+
+package org.antlr.parser.antlr4; 
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;

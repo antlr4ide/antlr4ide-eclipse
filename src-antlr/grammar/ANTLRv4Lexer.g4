@@ -36,7 +36,9 @@
  *	-- update for compatibility with Antlr v4.5
  */
 lexer grammar ANTLRv4Lexer;
-
+@header {
+package org.antlr.parser.antlr4;
+}
 options
    { superClass = LexerAdaptor; }
 import LexBasic;

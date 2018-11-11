@@ -15,4 +15,5 @@ Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.core.resources,
  org.eclipse.ui,
  org.junit;version="4.12.0"
-Bundle-ClassPath: lib/antlr4-4.7.2-SNAPSHOT-complete.jar
+Bundle-ClassPath: lib/antlr4-4.7.2-SNAPSHOT-complete.jar,
+ lib/junit.jar

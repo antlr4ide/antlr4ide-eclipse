@@ -38,6 +38,9 @@
  */
 
 parser grammar ANTLRv4Parser;
+@header {
+package org.antlr.parser.antlr4; 
+}
 
 options
    { tokenVocab = ANTLRv4Lexer; }
