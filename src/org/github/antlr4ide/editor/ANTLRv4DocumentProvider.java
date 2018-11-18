@@ -15,27 +15,32 @@ import org.eclipse.ui.editors.text.TextEditor;
 
 public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 
-	private boolean DEBUG=false; //true;
+	private boolean DEBUG=true;
+	
+	@Deprecated
 	private ANTLRv4Editor editor;
+	
+	private IDocument doc;
 
 
 	public ANTLRv4DocumentProvider(ANTLRv4Editor antlRv4Editor) { 
 		super();
 		this.editor=antlRv4Editor;
+		System.out.println(">>> ANTLRv4DocumentProvider editor>" + editor + "<");
 	}
 
 
 	protected IDocument createDocument(Object element) throws CoreException {
 		if (DEBUG) {
 			System.out.println(">>> ANTLRv4DocumentProvider.createDocument element>" + element.getClass() + "<");
-			Exception ex = new Exception();
-			int i = 0;
-			for (StackTraceElement ste : ex.getStackTrace()) {
-				System.out.println("    createDocument> "+ ste.toString());
-				i++;
-				if (i > 20)
-					break;
-			}
+//			Exception ex = new Exception();
+//			int i = 0;
+//			for (StackTraceElement ste : ex.getStackTrace()) {
+//				System.out.println("    createDocument> "+ ste.toString());
+//				i++;
+//				if (i > 20)
+//					break;
+//			}
 		}
 		
 		IDocument document = super.createDocument(element);
@@ -50,8 +55,9 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 						});
 			partitioner.connect(document);
 			document.setDocumentPartitioner(partitioner);
-			((AntlrDocument)document).scan();
+			((AntlrDocument)document).scan(); // set the initial list of tokens.
 		}
+		this.doc=document;
 		return document;
 	}
 	
@@ -61,7 +67,12 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 	}
 	
 	
-	
+	public IDocument getDoc() {
+		return doc;
+	}
+
+
+	// TODO: Move to AntlrScanner
 	public class MyDocumentListener implements IDocumentListener  {
 		TextEditor editor;
 

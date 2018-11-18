@@ -7,9 +7,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
-import org.github.antlr4ide.editor.ANTLRv4Configuration;
-import org.github.antlr4ide.editor.ANTLRv4Editor;
-import org.github.antlr4ide.editor.AntlrScanner;
+import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
+import org.github.antlr4ide.editor.AntlrDocument;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -29,7 +28,7 @@ import org.github.antlr4ide.editor.AntlrScanner;
  */
 
 public class AntlrDocOutlineView extends ContentOutlinePage {
-	private boolean DEBUG = false; // debug outline view
+	private boolean DEBUG = true; // debug outline view
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -54,9 +53,9 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 	}
 
 	protected Object fInput;
-	protected IDocumentProvider fDocumentProvider;
+	protected ANTLRv4DocumentProvider fDocumentProvider;
 	protected ITextEditor fTextEditor;
-	protected AntlrScanner fScanner;
+	protected AntlrDocument doc;
 
 	/**
 	 * Creates a content outline page using the given provider and the given editor.
@@ -70,14 +69,11 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 		super();
 		if (DEBUG)
 			System.out.println(">>> AntlrDocOutlineView (" + provider.getClass() + ", " + editor.getClass() + ")");
-		fDocumentProvider = provider;
+		fDocumentProvider = (ANTLRv4DocumentProvider)provider;
 		fTextEditor = editor;
-
-		// get the configured scanner for the editor. Needed in order to get the list of rules
-		fScanner = ((ANTLRv4Configuration) ((ANTLRv4Editor) editor).getEditorConfiguration()).getANTLRv4Scanner();
-		if (DEBUG)
-			System.out.println(">>> AntlrDocOutlineView scanner " + fScanner.getClass() + " ");
-
+		
+		doc=(AntlrDocument) fDocumentProvider.getDoc();
+		
 	}
 
 	/*
@@ -91,7 +87,7 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 		super.createControl(parent);
 
 		TreeViewer viewer = getTreeViewer();
-		viewer.setContentProvider(new AntlrDocOutlineContentProvider(fDocumentProvider, fScanner));
+		viewer.setContentProvider(new AntlrDocOutlineContentProvider(fDocumentProvider));
 		viewer.setLabelProvider(new LabelProvider());
 		viewer.setComparator(new ViewerComparator()); // Keep outline sorted
 
@@ -113,9 +109,9 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 		else {
 			Position pos = null;
 			if (selection.getFirstElement() instanceof String) {
-				pos = fScanner.getParserRules().get(selection.getFirstElement());
+				pos = doc.getParserRules().get(selection.getFirstElement());
 				if (pos == null)
-					pos = fScanner.getLexerRules().get(selection.getFirstElement());
+					pos = doc.getLexerRules().get(selection.getFirstElement());
 			}
 
 			if (pos != null) {

@@ -24,10 +24,6 @@ public class AntlrScanner implements ITokenScanner  {
 	private int setRangeOffset;
 	private int setRangeLength;
 
-	private Map<String, Position> parserRules;
-
-	private Map<String, Position> lexerRules;
-
 	public AntlrScanner() {
          this(false);
 	}
@@ -191,9 +187,5 @@ public class AntlrScanner implements ITokenScanner  {
 				    -antlrTokens.get(tokenIndex).getStartIndex();
 		return length;
 	}
-	/* ---------------- */
-	
-	public Map<String,Position> getParserRules() { return parserRules; }
-	public Map<String,Position> getLexerRules()  { return lexerRules;  }
 	
 }

@@ -3,20 +3,22 @@ package org.github.antlr4ide.editor.outliner;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
-import org.github.antlr4ide.editor.AntlrScanner;
+import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
+import org.github.antlr4ide.editor.AntlrDocument;
 
 /**
  * Divides the editor's document into ten segments and provides elements for them.
  */
 public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
+	private boolean DEBUG=true;
 
-	protected AntlrScanner fScanner;
-	private IDocumentProvider fDocumentProvider;
-	private boolean DEBUG=false;
+	private ANTLRv4DocumentProvider fDocumentProvider;
+	private AntlrDocument doc;
 	
-	public AntlrDocOutlineContentProvider(IDocumentProvider fDocumentProvider, AntlrScanner fScanner) {
-		this.fDocumentProvider = fDocumentProvider;
-		this.fScanner=fScanner;
+	public AntlrDocOutlineContentProvider(IDocumentProvider fDocumentProvider) {
+		this.fDocumentProvider = (ANTLRv4DocumentProvider) fDocumentProvider;
+		this.doc=(AntlrDocument) this.fDocumentProvider.getDoc();
+
 	}
 
 	/*
@@ -50,8 +52,8 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 			System.out.println(">>> AntlrDocOutlineOutlineContentProvider.hasChildren ("+(element==null?"null":element.getClass())+")");
 		if (element instanceof OutlineRootElement) {
 			Integer type= ((OutlineRootElement)element).getType();
-			if(type==0) return fScanner.getParserRules().isEmpty()==false;
-			if(type==1) return fScanner.getLexerRules().isEmpty()==false;
+			if(type==0) return doc.getParserRules().isEmpty()==false;
+			if(type==1) return doc.getLexerRules().isEmpty()==false;
 		}
 		return false;
 	}
@@ -74,8 +76,8 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 		
 		if (element instanceof OutlineRootElement) {
 			Integer type= ((OutlineRootElement)element).getType();
-			if(type==0) return fScanner.getParserRules().keySet().toArray();
-			if(type==1) return fScanner.getLexerRules().keySet().toArray();
+			if(type==0) return doc.getParserRules().keySet().toArray();
+			if(type==1) return doc.getLexerRules().keySet().toArray();
 		}
 		
 		return new Object[0];
