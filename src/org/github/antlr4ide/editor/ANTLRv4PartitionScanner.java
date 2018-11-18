@@ -9,7 +9,7 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 
 public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
-	private static final boolean DEBUG_VERBOSE = !false;
+	private static final boolean DEBUG_VERBOSE = false;
 
 	public final static String ANTLRv4_DIVISION   = "__antlrv4_div";
 	
