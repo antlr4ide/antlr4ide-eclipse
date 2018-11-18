@@ -9,6 +9,7 @@ import org.eclipse.jface.text.rules.IToken;
 import org.eclipse.jface.text.rules.Token;
 
 public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
+	private static final boolean DEBUG_VERBOSE = !false;
 
 	public final static String ANTLRv4_DIVISION   = "__antlrv4_div";
 	
@@ -61,6 +62,20 @@ public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
 		 *    FastPartitioner.initialize()
 		 *    FastPartitioner.documentChanged2()
 		 */
+		if (DEBUG_VERBOSE) {
+			System.out.println(">>> ANTLRv4PartitionScanner.nextToken ");
+			Exception ex = new Exception();
+			int i = 0;
+			for (StackTraceElement ste : ex.getStackTrace()) {
+				if(i<20)
+				    System.out.println(ste.toString());
+				else if (i > 20 && ste.toString().startsWith("org.github")) // only print related
+					System.out.println(ste.toString());
+				i++;
+			}
+		}
+		
+		
 		tokenIndex++;
 		IToken token;
 		if(tokenIndex<tokenData.size()) 
