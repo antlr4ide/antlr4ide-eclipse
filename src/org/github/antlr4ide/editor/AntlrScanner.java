@@ -14,7 +14,7 @@ public class AntlrScanner implements ITokenScanner  {
 	protected boolean DEBUG;
 
 	protected AntlrDocument document;
-	protected static Map<Integer, IToken> hilite ;
+	protected static Map<Integer, IToken> hilite ;  // Users should override this. See ANTLRv4Scanner.java
 	
 	private ANTLRv4Editor editor;
 	
