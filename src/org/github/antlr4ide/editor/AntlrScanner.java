@@ -16,8 +16,6 @@ public class AntlrScanner implements ITokenScanner  {
 	protected AntlrDocument document;
 	protected static Map<Integer, IToken> hilite ;  // Users should override this. See ANTLRv4Scanner.java
 	
-	private ANTLRv4Editor editor;
-	
 	private IToken fDefaultReturnToken;
 	
 	private List<Token>antlrTokens;
@@ -31,14 +29,13 @@ public class AntlrScanner implements ITokenScanner  {
 	private Map<String, Position> lexerRules;
 
 	public AntlrScanner() {
-         this(null,false);
+         this(false);
 	}
 	
-	public AntlrScanner(ANTLRv4Editor editor, boolean debug) {
-		this.editor=editor;
+	public AntlrScanner( boolean debug) {
 		this.DEBUG=debug;
 		if (DEBUG) {
-			System.out.println(">>> AntlrScanner Editor>" +editor + "< debug>" + debug + "<");
+			System.out.println(">>> AntlrScanner debug>" + debug + "<");
 		}
 		
 	}

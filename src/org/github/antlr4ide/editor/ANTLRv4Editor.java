@@ -13,7 +13,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
 	public ANTLRv4Editor() {
 		super();
-		setSourceViewerConfiguration(new ANTLRv4Configuration(this));
+		setSourceViewerConfiguration(new ANTLRv4Configuration());
 		setDocumentProvider(new ANTLRv4DocumentProvider(this));
 	}
 

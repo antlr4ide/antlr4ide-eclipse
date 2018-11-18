@@ -12,13 +12,6 @@ public class ANTLRv4Configuration extends SourceViewerConfiguration {
 	
 //	private XMLDoubleClickStrategy doubleClickStrategy;
 	private ANTLRv4Scanner scanner;
-	private ANTLRv4Editor editor;
-
-
-	public ANTLRv4Configuration(ANTLRv4Editor antlRv4Editor) {
-		super();
-		this.editor=antlRv4Editor;
-	}
 
 	@Override
 	public String[] getConfiguredContentTypes(ISourceViewer sourceViewer) {
@@ -39,13 +32,11 @@ public class ANTLRv4Configuration extends SourceViewerConfiguration {
 
 	public ANTLRv4Scanner getANTLRv4Scanner() {
 		if (scanner == null) {
-			scanner = new ANTLRv4Scanner(editor,true);
+			scanner = new ANTLRv4Scanner(true);
 			scanner.setDefaultReturnToken(new Token(IANTLRv4ColorConstants.DEFAULT));
 		}
 		return scanner;
 	}
-
-	public ANTLRv4Editor getEditor() { return this.editor; }
 
 	@Override
 	public IPresentationReconciler getPresentationReconciler(ISourceViewer sourceViewer) {
