@@ -7,6 +7,6 @@
 	<classpathentry excluding="java/" kind="src" path="src-antlr"/>
 	<classpathentry kind="src" path="target/generated-sources/antlr4"/>
 	<classpathentry excluding="antr4lexer/" kind="src" path="test"/>
-	<classpathentry exported="true" kind="lib" path="lib/antlr4-4.7.2-SNAPSHOT-complete.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/antlr4-4.7.2-SNAPSHOT-complete.jar" sourcepath="/antlr4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
