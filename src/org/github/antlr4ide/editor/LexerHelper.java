@@ -6,8 +6,8 @@ import java.util.Map;
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.parser.antlr4.ANTLRv4ParserBaseVisitor;
-import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.RecognitionException;
@@ -51,8 +51,7 @@ public class LexerHelper {
 
 		pot[0] = System.currentTimeMillis();
 
-		ANTLRInputStream antlrInputStream = new ANTLRInputStream(s);
-		ANTLRv4Lexer lexer = new ANTLRv4Lexer(antlrInputStream);
+		ANTLRv4Lexer lexer = new ANTLRv4Lexer(CharStreams.fromString(s));
 		pot[1] = System.currentTimeMillis();
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		ANTLRv4Parser parser = new ANTLRv4Parser(tokens);
