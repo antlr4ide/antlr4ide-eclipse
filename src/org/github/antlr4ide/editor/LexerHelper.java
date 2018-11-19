@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
-import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4ParserBaseVisitor;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
@@ -15,7 +14,6 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.antlr.v4.runtime.tree.RuleNode;
 import org.eclipse.jface.text.Position;
 
 public class LexerHelper {
@@ -76,15 +74,6 @@ public class LexerHelper {
 	}
 
 	public class ANTLRv4Visitor extends ANTLRv4ParserBaseVisitor<Void> {
-		
-//		public Void visit(ParseTree tree) {
-//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visit ParseTree >" + tree + "<");
-//			visitGrammarSpec((GrammarSpecContext) tree);
-//			for(int i=0; i<tree.getChildCount();i++)
-//			  visitChildren((RuleNode) tree.getChild(i));
-//			super.visit(tree);
-//			return null;
-//		}
 
 		@Override
 		public Void visitGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
