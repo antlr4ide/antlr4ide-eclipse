@@ -10,6 +10,11 @@ import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.Position;
 
+/**
+ * Encapsulation of the needed additions for the antlr parser.
+ * @author Henrik Sorensen
+ *
+ */
 public class AntlrDocument extends Document implements IDocument {
 
 
@@ -17,6 +22,16 @@ public class AntlrDocument extends Document implements IDocument {
 	private Map<String,Position> parserRules=new HashMap<String, Position>();
 	private Map<String,Position> lexerRules=new HashMap<String, Position>();
 	List<String> errorList = new ArrayList<String>();
+	
+	/**
+	 * Invoke the antlr parser and lexer for the document.
+	 * The ANTLRv4DocumentProvider will invoke this method, and process the errorList as needed. 
+	 * Results of the parsing is in 
+	 * <li>List<String> errorList format line:position:token.getStartIndex():token.getStopIndex():message</li>
+	 * <li>Map<String,Position> parserRules: name and location of parser rules</li>
+	 * <li>Map<String,Position> lexerRules: name and location of lexer rules</li>
+	 * The parser- and lexerRules maps are used to populate the outline view.
+	 */
 	public void scan() {
 		errorList.clear();
 		LexerHelper lexer = new LexerHelper(getParserRules(), getLexerRules(), errorList);
