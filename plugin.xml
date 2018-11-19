@@ -13,5 +13,20 @@
             id="org.github.antlr4ide.editor.ANTLRv4Editor">
       </editor>
    </extension>
-
+  <extension point="org.eclipse.ui.preferencePages">
+          <!-- experimenting with new native eclipse pref pages -->
+        <page
+            class="org.github.antlr4ide.editor.preferences.AntlrToolPreferencePage"
+            id="org.github.antlr4ide.Antlr4.newprefs"
+            name="ANTLR 4 IDE TOOL">
+            <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
+        </page>    
+        <page
+            class="org.github.antlr4ide.editor.preferences.AntlrFoldingPreferencePage"
+            id="org.github.antlr4ide.Antlr4.newprefs.folding"
+            name="Folding"
+            category="org.github.antlr4ide.Antlr4.newprefs">
+            <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
+        </page>    
+  </extension>
 </plugin>
