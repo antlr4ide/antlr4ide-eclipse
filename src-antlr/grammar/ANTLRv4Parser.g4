@@ -29,7 +29,7 @@
  *  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 /*	A grammar for ANTLR v4 written in ANTLR v4.
- *
+ * 
  *	Modified 2015.06.16 gbr
  *	-- update for compatibility with Antlr v4.5
  *	-- add mode for channels
