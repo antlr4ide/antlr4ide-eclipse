@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
+import org.antlr.parser.antlr4.ANTLRv4Parser.GrammarSpecContext;
 import org.antlr.parser.antlr4.ANTLRv4ParserBaseVisitor;
 import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.CharStreams;
@@ -14,6 +15,7 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.RuleNode;
 import org.eclipse.jface.text.Position;
 
 public class LexerHelper {
@@ -58,7 +60,8 @@ public class LexerHelper {
 		parser.removeErrorListeners();
 		parser.addErrorListener(printError);
 		parser.setBuildParseTree(true);
-		ParseTree tree = parser.grammarSpec();
+		ParseTree tree = parser.grammarSpec(); 
+		System.out.println(tree.toStringTree());
 		pot[2] = System.currentTimeMillis();
 		ANTLRv4Visitor visitor = new ANTLRv4Visitor();
 		visitor.visit(tree);
@@ -73,6 +76,15 @@ public class LexerHelper {
 	}
 
 	public class ANTLRv4Visitor extends ANTLRv4ParserBaseVisitor<Void> {
+		
+//		public Void visit(ParseTree tree) {
+//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visit ParseTree >" + tree + "<");
+//			visitGrammarSpec((GrammarSpecContext) tree);
+//			for(int i=0; i<tree.getChildCount();i++)
+//			  visitChildren((RuleNode) tree.getChild(i));
+//			super.visit(tree);
+//			return null;
+//		}
 
 		@Override
 		public Void visitGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
@@ -82,7 +94,7 @@ public class LexerHelper {
 			 */
 
 			String id = ctx.identifier().getText(); // name of imported grammar
-			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitGrammarSpec. Grammar name >" + id + "<");
+//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitGrammarSpec. Grammar name >" + id + "<");
 
 			return visitChildren(ctx); // continue the visit
 		}
@@ -99,7 +111,7 @@ public class LexerHelper {
 //			if (ctx.identifier().size() > 1)
 //				id2 = ctx.identifier(1).getText();
 
-			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitDelegateGrammar. Import name >" + id + "<");
+//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitDelegateGrammar. Import name >" + id + "<");
 
 			return visitChildren(ctx); // continue the visit
 		}
@@ -113,7 +125,7 @@ public class LexerHelper {
 			 * exceptionGroup
 			 */
 
-			// System.out.println(">>> LexerHelper.ANTLRv4Visitor visitParserRuleSpec. Defining parser rule >" + ctx.RULE_REF().getText() + "<");
+//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitParserRuleSpec. Defining parser rule >" + ctx.RULE_REF().getText() + "<");
 
 			int a=ctx.start.getStartIndex(); // ctx.RULE_REF().getSymbol().getStartIndex()
 			int b=ctx.stop.getStopIndex();  // ctx.RULE_REF().getSymbol().getStopIndex()
@@ -134,7 +146,7 @@ public class LexerHelper {
 			 * exceptionGroup
 			 */
 
-			//System.out.println(">>> LexerHelper.ANTLRv4Visitor visitLexerRuleSpec. Defining lexer rule >" + ctx.TOKEN_REF().getText() + "<");
+//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitLexerRuleSpec. Defining lexer rule >" + ctx.TOKEN_REF().getText() + "<");
 			
 			int a=ctx.start.getStartIndex(); // ctx.TOKEN_REF().getSymbol().getStartIndex()
 			int b=ctx.stop.getStopIndex();  // ctx.TOKEN_REF().getSymbol().getStopIndex()

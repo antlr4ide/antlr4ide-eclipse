@@ -87,7 +87,7 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 
 		@Override
 		public void documentChanged(DocumentEvent event) {
-			//System.out.println("documentChanged " +event);
+//			System.out.println("documentChanged " +event);
 			try {
 			AntlrDocument doc=(AntlrDocument)  event.getDocument();
 			doc.scan();
