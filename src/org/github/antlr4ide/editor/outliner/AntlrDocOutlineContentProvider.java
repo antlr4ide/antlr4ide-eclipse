@@ -10,7 +10,7 @@ import org.github.antlr4ide.editor.AntlrDocument;
  * Divides the editor's document into ten segments and provides elements for them.
  */
 public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
-	private boolean DEBUG=true;
+	private boolean DEBUG= !true;
 
 	private ANTLRv4DocumentProvider fDocumentProvider;
 	private AntlrDocument doc;

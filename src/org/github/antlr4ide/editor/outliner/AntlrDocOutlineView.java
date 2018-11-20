@@ -28,7 +28,7 @@ import org.github.antlr4ide.editor.AntlrDocument;
  */
 
 public class AntlrDocOutlineView extends ContentOutlinePage {
-	private boolean DEBUG = true; // debug outline view
+	private boolean DEBUG = !true; // debug outline view
 
 	/**
 	 * The ID of the view as specified by the extension.

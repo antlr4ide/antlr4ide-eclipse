@@ -37,7 +37,8 @@ public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
 	 */
 	
 	public void setRange(IDocument document, int offset, int length) {
-		System.out.println(">>> ANTLRv4PartitionScanner.setRange offset>"+offset+"< length>"+length+"<");
+		if (DEBUG_VERBOSE)
+			System.out.println(">>> ANTLRv4PartitionScanner.setRange offset>"+offset+"< length>"+length+"<");
 		clearTokenLists();
         addTokenData(ANTLRv4_DIVISION,offset,length);
         tokenIndex=-1;
@@ -46,7 +47,8 @@ public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
 	
 	public void setPartialRange(IDocument document, int offset, int length, String contentType, int partitionOffset)
 	{ // rescan source from the "partitionOffset" until end of source to establish partition boundaries for all subsequent boundaries 
-		System.out.println(">>> ANTLRv4PartitionScanner.setPartialRange offset>"+offset+"<"
+		if (DEBUG_VERBOSE)
+			System.out.println(">>> ANTLRv4PartitionScanner.setPartialRange offset>"+offset+"<"
 				+ " length>"+length+"<"
 			    + " contentType>"+contentType+"<"
 			    + " partitionOffset>"+partitionOffset+"<"
@@ -83,18 +85,21 @@ public class ANTLRv4PartitionScanner implements IPartitionTokenScanner {
 		else
 			  token=Token.EOF;
 		
-		System.out.println(">>> ANTLRv4PartitionScanner.nextToken >"+(token.isOther()?token.getData():(token.isEOF()?"<EOF>":"-"))+"<");
+		if (DEBUG_VERBOSE)
+			System.out.println(">>> ANTLRv4PartitionScanner.nextToken >"+(token.isOther()?token.getData():(token.isEOF()?"<EOF>":"-"))+"<");
 		return token;
 	}
 
 	public int getTokenOffset() {
 		int offset=tokenOffset.get(tokenIndex);
+		if (DEBUG_VERBOSE)
 		System.out.println(">>> ANTLRv4PartitionScanner.getTokenOffset >"+offset+"<");
 		return offset;
 	}
 
 	public int getTokenLength() {
 		int length=tokenLength.get(tokenIndex);
+		if (DEBUG_VERBOSE)
 		System.out.println(">>> ANTLRv4PartitionScanner.getTokenLength >"+length+"<");
 		return length;
 	}
