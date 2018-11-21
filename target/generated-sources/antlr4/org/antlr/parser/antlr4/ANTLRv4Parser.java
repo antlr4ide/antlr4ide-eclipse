@@ -1,5 +1,7 @@
-package org.antlr.parser.antlr4;
-// Generated from ANTLRv4Parser.g4 by ANTLR 4.5.1
+// Generated from ANTLRv4Parser.g4 by ANTLR 4.7.1
+
+package org.antlr.parser.antlr4; 
+
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
@@ -11,7 +13,7 @@ import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class ANTLRv4Parser extends Parser {
-	static { RuntimeMetaData.checkVersion("4.5.1", RuntimeMetaData.VERSION); }
+	static { RuntimeMetaData.checkVersion("4.7.1", RuntimeMetaData.VERSION); }
 
 	protected static final DFA[] _decisionToDFA;
 	protected static final PredictionContextCache _sharedContextCache =
@@ -47,40 +49,49 @@ public class ANTLRv4Parser extends Parser {
 		RULE_notSet = 53, RULE_blockSet = 54, RULE_setElement = 55, RULE_block = 56, 
 		RULE_ruleref = 57, RULE_characterRange = 58, RULE_terminal = 59, RULE_elementOptions = 60, 
 		RULE_elementOption = 61, RULE_identifier = 62;
-	public static final String[] ruleNames = {
-		"grammarSpec", "grammarType", "prequelConstruct", "optionsSpec", "option", 
-		"optionValue", "delegateGrammars", "delegateGrammar", "tokensSpec", "channelsSpec", 
-		"idList", "action", "actionScopeName", "actionBlock", "argActionBlock", 
-		"modeSpec", "rules", "ruleSpec", "parserRuleSpec", "exceptionGroup", "exceptionHandler", 
-		"finallyClause", "rulePrequel", "ruleReturns", "throwsSpec", "localsSpec", 
-		"ruleAction", "ruleModifiers", "ruleModifier", "ruleBlock", "ruleAltList", 
-		"labeledAlt", "lexerRuleSpec", "lexerRuleBlock", "lexerAltList", "lexerAlt", 
-		"lexerElements", "lexerElement", "labeledLexerElement", "lexerBlock", 
-		"lexerCommands", "lexerCommand", "lexerCommandName", "lexerCommandExpr", 
-		"altList", "alternative", "element", "labeledElement", "ebnf", "blockSuffix", 
-		"ebnfSuffix", "lexerAtom", "atom", "notSet", "blockSet", "setElement", 
-		"block", "ruleref", "characterRange", "terminal", "elementOptions", "elementOption", 
-		"identifier"
-	};
+	private static String[] makeRuleNames() {
+		return new String[] {
+			"grammarSpec", "grammarType", "prequelConstruct", "optionsSpec", "option", 
+			"optionValue", "delegateGrammars", "delegateGrammar", "tokensSpec", "channelsSpec", 
+			"idList", "action", "actionScopeName", "actionBlock", "argActionBlock", 
+			"modeSpec", "rules", "ruleSpec", "parserRuleSpec", "exceptionGroup", 
+			"exceptionHandler", "finallyClause", "rulePrequel", "ruleReturns", "throwsSpec", 
+			"localsSpec", "ruleAction", "ruleModifiers", "ruleModifier", "ruleBlock", 
+			"ruleAltList", "labeledAlt", "lexerRuleSpec", "lexerRuleBlock", "lexerAltList", 
+			"lexerAlt", "lexerElements", "lexerElement", "labeledLexerElement", "lexerBlock", 
+			"lexerCommands", "lexerCommand", "lexerCommandName", "lexerCommandExpr", 
+			"altList", "alternative", "element", "labeledElement", "ebnf", "blockSuffix", 
+			"ebnfSuffix", "lexerAtom", "atom", "notSet", "blockSet", "setElement", 
+			"block", "ruleref", "characterRange", "terminal", "elementOptions", "elementOption", 
+			"identifier"
+		};
+	}
+	public static final String[] ruleNames = makeRuleNames();
 
-	private static final String[] _LITERAL_NAMES = {
-		null, null, null, null, null, null, null, null, null, null, null, null, 
-		"'options'", "'tokens'", "'channels'", "'import'", "'fragment'", "'lexer'", 
-		"'parser'", "'grammar'", "'protected'", "'public'", "'private'", "'returns'", 
-		"'locals'", "'throws'", "'catch'", "'finally'", "'mode'"
-	};
-	private static final String[] _SYMBOLIC_NAMES = {
-		null, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT", 
-		"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL", 
-		"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT", 
-		"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE", 
-		"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
-		"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
-		"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
-		"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "ERRCHAR", "END_ARGUMENT", 
-		"UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", 
-		"ACTION_CONTENT", "UNTERMINATED_CHAR_SET"
-	};
+	private static String[] makeLiteralNames() {
+		return new String[] {
+			null, null, null, null, null, null, null, null, null, null, null, null, 
+			"'options'", "'tokens'", "'channels'", "'import'", "'fragment'", "'lexer'", 
+			"'parser'", "'grammar'", "'protected'", "'public'", "'private'", "'returns'", 
+			"'locals'", "'throws'", "'catch'", "'finally'", "'mode'"
+		};
+	}
+	private static final String[] _LITERAL_NAMES = makeLiteralNames();
+	private static String[] makeSymbolicNames() {
+		return new String[] {
+			null, "TOKEN_REF", "RULE_REF", "LEXER_CHAR_SET", "DOC_COMMENT", "BLOCK_COMMENT", 
+			"LINE_COMMENT", "INT", "STRING_LITERAL", "UNTERMINATED_STRING_LITERAL", 
+			"BEGIN_ARGUMENT", "BEGIN_ACTION", "OPTIONS", "TOKENS", "CHANNELS", "IMPORT", 
+			"FRAGMENT", "LEXER", "PARSER", "GRAMMAR", "PROTECTED", "PUBLIC", "PRIVATE", 
+			"RETURNS", "LOCALS", "THROWS", "CATCH", "FINALLY", "MODE", "COLON", "COLONCOLON", 
+			"COMMA", "SEMI", "LPAREN", "RPAREN", "LBRACE", "RBRACE", "RARROW", "LT", 
+			"GT", "ASSIGN", "QUESTION", "STAR", "PLUS_ASSIGN", "PLUS", "OR", "DOLLAR", 
+			"RANGE", "DOT", "AT", "POUND", "NOT", "ID", "WS", "ERRCHAR", "END_ARGUMENT", 
+			"UNTERMINATED_ARGUMENT", "ARGUMENT_CONTENT", "END_ACTION", "UNTERMINATED_ACTION", 
+			"ACTION_CONTENT", "UNTERMINATED_CHAR_SET"
+		};
+	}
+	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
 	/**
@@ -279,6 +290,7 @@ public class ANTLRv4Parser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(155);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case LEXER:
 				{
@@ -358,6 +370,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 4, RULE_prequelConstruct);
 		try {
 			setState(162);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case OPTIONS:
 				enterOuterAlt(_localctx, 1);
@@ -577,6 +590,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(191);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -744,6 +758,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 14, RULE_delegateGrammar);
 		try {
 			setState(209);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -814,6 +829,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(212);
 			match(LBRACE);
 			setState(214);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==TOKEN_REF || _la==RULE_REF) {
 				{
@@ -875,6 +891,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(219);
 			match(LBRACE);
 			setState(221);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==TOKEN_REF || _la==RULE_REF) {
 				{
@@ -957,6 +974,7 @@ public class ANTLRv4Parser extends Parser {
 				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			}
 			setState(234);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==COMMA) {
 				{
@@ -1018,6 +1036,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(236);
 			match(AT);
 			setState(240);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,14,_ctx) ) {
 			case 1:
 				{
@@ -1075,6 +1094,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 24, RULE_actionScopeName);
 		try {
 			setState(248);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -1403,6 +1423,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 34, RULE_ruleSpec);
 		try {
 			setState(285);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -1507,6 +1528,7 @@ public class ANTLRv4Parser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(294);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FRAGMENT) | (1L << PROTECTED) | (1L << PUBLIC) | (1L << PRIVATE))) != 0)) {
 				{
@@ -1518,6 +1540,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(296);
 			match(RULE_REF);
 			setState(298);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==BEGIN_ARGUMENT) {
 				{
@@ -1527,6 +1550,7 @@ public class ANTLRv4Parser extends Parser {
 			}
 
 			setState(301);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==RETURNS) {
 				{
@@ -1536,6 +1560,7 @@ public class ANTLRv4Parser extends Parser {
 			}
 
 			setState(304);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==THROWS) {
 				{
@@ -1545,6 +1570,7 @@ public class ANTLRv4Parser extends Parser {
 			}
 
 			setState(307);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==LOCALS) {
 				{
@@ -1639,6 +1665,7 @@ public class ANTLRv4Parser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(327);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==FINALLY) {
 				{
@@ -1790,6 +1817,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 44, RULE_rulePrequel);
 		try {
 			setState(338);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case OPTIONS:
 				enterOuterAlt(_localctx, 1);
@@ -2132,7 +2160,10 @@ public class ANTLRv4Parser extends Parser {
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << FRAGMENT) | (1L << PROTECTED) | (1L << PUBLIC) | (1L << PRIVATE))) != 0)) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -2297,6 +2328,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(376);
 			alternative();
 			setState(379);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==POUND) {
 				{
@@ -2373,6 +2405,7 @@ public class ANTLRv4Parser extends Parser {
 				_la = _input.LA(1);
 			}
 			setState(388);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==FRAGMENT) {
 				{
@@ -2546,6 +2579,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(410);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -2560,6 +2594,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(405);
 				lexerElements();
 				setState(407);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==RARROW) {
 					{
@@ -2694,6 +2729,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(433);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,45,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -2701,6 +2737,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(417);
 				labeledLexerElement();
 				setState(419);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION) | (1L << STAR) | (1L << PLUS))) != 0)) {
 					{
@@ -2717,6 +2754,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(421);
 				lexerAtom();
 				setState(423);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION) | (1L << STAR) | (1L << PLUS))) != 0)) {
 					{
@@ -2733,6 +2771,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(425);
 				lexerBlock();
 				setState(427);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION) | (1L << STAR) | (1L << PLUS))) != 0)) {
 					{
@@ -2749,6 +2788,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(429);
 				actionBlock();
 				setState(431);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==QUESTION) {
 					{
@@ -2816,10 +2856,14 @@ public class ANTLRv4Parser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==ASSIGN || _la==PLUS_ASSIGN) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			setState(439);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case LEXER_CHAR_SET:
@@ -3007,6 +3051,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 82, RULE_lexerCommand);
 		try {
 			setState(460);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,48,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -3070,6 +3115,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 84, RULE_lexerCommandName);
 		try {
 			setState(464);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -3130,6 +3176,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 86, RULE_lexerCommandExpr);
 		try {
 			setState(468);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -3264,6 +3311,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(487);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -3276,6 +3324,7 @@ public class ANTLRv4Parser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(479);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -3365,6 +3414,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(504);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,58,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -3372,6 +3422,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(489);
 				labeledElement();
 				setState(492);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case QUESTION:
 				case STAR:
@@ -3406,6 +3457,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(494);
 				atom();
 				setState(497);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case QUESTION:
 				case STAR:
@@ -3447,6 +3499,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(500);
 				actionBlock();
 				setState(502);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==QUESTION) {
 					{
@@ -3514,10 +3567,14 @@ public class ANTLRv4Parser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==ASSIGN || _la==PLUS_ASSIGN) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			setState(510);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case RULE_REF:
@@ -3587,6 +3644,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(512);
 			block();
 			setState(514);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << QUESTION) | (1L << STAR) | (1L << PLUS))) != 0)) {
 				{
@@ -3684,6 +3742,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(530);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case QUESTION:
 				enterOuterAlt(_localctx, 1);
@@ -3691,6 +3750,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(518);
 				match(QUESTION);
 				setState(520);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==QUESTION) {
 					{
@@ -3707,6 +3767,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(522);
 				match(STAR);
 				setState(524);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==QUESTION) {
 					{
@@ -3723,6 +3784,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(526);
 				match(PLUS);
 				setState(528);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==QUESTION) {
 					{
@@ -3788,6 +3850,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(540);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,66,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -3823,6 +3886,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(536);
 				match(DOT);
 				setState(538);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -3885,6 +3949,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(549);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 			case STRING_LITERAL:
@@ -3914,6 +3979,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(545);
 				match(DOT);
 				setState(547);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -3971,6 +4037,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 106, RULE_notSet);
 		try {
 			setState(555);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,69,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -4112,6 +4179,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(578);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,73,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -4119,6 +4187,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(568);
 				match(TOKEN_REF);
 				setState(570);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -4135,6 +4204,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(572);
 				match(STRING_LITERAL);
 				setState(574);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -4217,10 +4287,12 @@ public class ANTLRv4Parser extends Parser {
 			setState(580);
 			match(LPAREN);
 			setState(591);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << OPTIONS) | (1L << COLON) | (1L << AT))) != 0)) {
 				{
 				setState(582);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==OPTIONS) {
 					{
@@ -4302,6 +4374,7 @@ public class ANTLRv4Parser extends Parser {
 			setState(596);
 			match(RULE_REF);
 			setState(598);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==BEGIN_ARGUMENT) {
 				{
@@ -4311,6 +4384,7 @@ public class ANTLRv4Parser extends Parser {
 			}
 
 			setState(601);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==LT) {
 				{
@@ -4413,6 +4487,7 @@ public class ANTLRv4Parser extends Parser {
 		int _la;
 		try {
 			setState(615);
+			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case TOKEN_REF:
 				enterOuterAlt(_localctx, 1);
@@ -4420,6 +4495,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(607);
 				match(TOKEN_REF);
 				setState(609);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -4436,6 +4512,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(611);
 				match(STRING_LITERAL);
 				setState(613);
+				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==LT) {
 					{
@@ -4568,6 +4645,7 @@ public class ANTLRv4Parser extends Parser {
 		enterRule(_localctx, 122, RULE_elementOption);
 		try {
 			setState(635);
+			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,84,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
@@ -4584,6 +4662,7 @@ public class ANTLRv4Parser extends Parser {
 				setState(630);
 				match(ASSIGN);
 				setState(633);
+				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case TOKEN_REF:
 				case RULE_REF:
@@ -4649,7 +4728,10 @@ public class ANTLRv4Parser extends Parser {
 			_la = _input.LA(1);
 			if ( !(_la==TOKEN_REF || _la==RULE_REF) ) {
 			_errHandler.recoverInline(this);
-			} else {
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
 				consume();
 			}
 			}
@@ -4666,7 +4748,7 @@ public class ANTLRv4Parser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3?\u0282\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3?\u0282\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
@@ -4716,7 +4798,7 @@ public class ANTLRv4Parser extends Parser {
 		">\7>\u0270\n>\f>\16>\u0273\13>\3>\3>\3?\3?\3?\3?\3?\5?\u027c\n?\5?\u027e"+
 		"\n?\3@\3@\3@\2\2A\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\60\62"+
 		"\64\668:<>@BDFHJLNPRTVXZ\\^`bdfhjlnprtvxz|~\2\5\4\2\22\22\26\30\4\2**"+
-		"--\3\2\3\4\u02aa\2\u0083\3\2\2\2\4\u009d\3\2\2\2\6\u00a4\3\2\2\2\b\u00a6"+
+		"--\3\2\3\4\2\u02aa\2\u0083\3\2\2\2\4\u009d\3\2\2\2\6\u00a4\3\2\2\2\b\u00a6"+
 		"\3\2\2\2\n\u00b2\3\2\2\2\f\u00c1\3\2\2\2\16\u00c3\3\2\2\2\20\u00d3\3\2"+
 		"\2\2\22\u00d5\3\2\2\2\24\u00dc\3\2\2\2\26\u00e3\3\2\2\2\30\u00ee\3\2\2"+
 		"\2\32\u00fa\3\2\2\2\34\u00fc\3\2\2\2\36\u0105\3\2\2\2 \u010e\3\2\2\2\""+

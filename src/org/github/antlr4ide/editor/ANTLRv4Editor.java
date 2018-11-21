@@ -13,18 +13,20 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
 	public ANTLRv4Editor() {
 		super();
-		setSourceViewerConfiguration(new ANTLRv4Configuration(this));
-		setDocumentProvider(new ANTLRv4DocumentProvider());
+		setSourceViewerConfiguration(new ANTLRv4Configuration());
+		setDocumentProvider(new ANTLRv4DocumentProvider(this));
 	}
+
+		/*
+		 * This method is exposing the source viewer configuration. 
+		 * This is used by various parts of the editor
+		 * - outliner to get to the scanner that contains the map of parserrules and lexerrules
+		 */
+		public SourceViewerConfiguration getEditorConfiguration() {
+			return getSourceViewerConfiguration();
+		}
 	
-	/*
-	 * This method is exposing the source viewer configuration. 
-	 * This is used by various parts of the editor
-	 * - outliner to get to the scanner that contains the map of parserrules and lexerrules
-	 */
-	public SourceViewerConfiguration getEditorConfiguration() {
-		return getSourceViewerConfiguration();
-	}
+	
 	
 	public void dispose() {
 		super.dispose();

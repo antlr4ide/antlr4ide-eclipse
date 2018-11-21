@@ -5,7 +5,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
-
+ 
 public abstract class LexerAdaptor extends Lexer {
 
 	public LexerAdaptor(CharStream input) {
@@ -85,4 +85,5 @@ public abstract class LexerAdaptor extends Lexer {
 	private boolean inParserRule() { // not used, but added for clarity
 		return _currentRuleType == ANTLRv4Lexer.RULE_REF;
 	}
+
 }
