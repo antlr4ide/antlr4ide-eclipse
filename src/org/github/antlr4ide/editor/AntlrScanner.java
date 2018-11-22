@@ -60,8 +60,6 @@ public class AntlrScanner implements ITokenScanner  {
 	 * The convention Eclipse seems to use is:
 	 *    for all tokens in the range return text attributes
 	 *    start offset and lengths can be anywhere within the document, and offset can be a start of line
-	 * TODO: setRange should rebuild the parse tree
-	 * setRange is invoked _after_ the partition scanner
 	 */
 	@Override
 	public void setRange(IDocument document, int offset, int length) {
@@ -82,14 +80,14 @@ public class AntlrScanner implements ITokenScanner  {
 				i++;
 			}
 		}
-		
+		//TODO: Set offset and length to ensure enough is scanned. Use the matched Rules to get the positions of previous and next rules.
 		this.setRangeOffset=offset;
 		this.setRangeLength=length;
 		
 		this.document= (AntlrDocument) document;
 
 		antlrTokens=this.document.antlrTokens;
-		tokenIndex=getAntlrTokenIndex(offset, length);
+		tokenIndex=getAntlrTokenIndex(setRangeOffset, setRangeLength);
 		
 	}
 
