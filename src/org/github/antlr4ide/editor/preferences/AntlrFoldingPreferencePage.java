@@ -3,17 +3,16 @@ package org.github.antlr4ide.editor.preferences;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
 import org.eclipse.jface.preference.StringFieldEditor;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 
 public class AntlrFoldingPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
 	@Override
 	public void init(IWorkbench workbench) {
-		setPreferenceStore(workbench.getPreferenceStore());
+		setPreferenceStore(PlatformUI.getPreferenceStore());
 		setDescription("ANTLR Folding Configuration");
 	}
 

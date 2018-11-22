@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
+import org.eclipse.ui.PlatformUI;
 
 public class AntlrToolPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
@@ -26,7 +27,7 @@ public class AntlrToolPreferencePage extends FieldEditorPreferencePage implement
 	
 	@Override
 	public void init(IWorkbench workbench) { 
-	    setPreferenceStore(workbench.getPreferenceStore());
+	    setPreferenceStore(PlatformUI.getPreferenceStore());
 }
 
 	@Override
