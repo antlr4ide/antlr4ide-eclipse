@@ -37,4 +37,19 @@ hilite.put(ANTLRv4Lexer.FRAGMENT, stmtTextToken);
 The Outline view uses the lexer rules and parser rules maps that the scanner produced. 
 The outline content provider [AntlrDocOutlineContentProvider](https://github.com/antlr4ide/antlr4ide-eclipse/blob/master/src/org/github/antlr4ide/editor/outliner/AntlrDocOutlineContentProvider.java) takes the content of the maps and add to the outline content.
 
- 
+## TODOs
+### Preference Pages
+### Preference Pages for hilights
+### Semantic validation
+### Folding
+### Code generation (Using eclipse Builders)
+### Code generation for multiple target languages
+### Refactoring
+### Code completion
+### Incremental Scanning/Parsing 
+### Hovering, Quick fixes
+### Code definition lookup (ctrl+Mouse)
+### Use proper logging infrastructure
+### Eclipse Help
+### Eclipse Tutorial
+
