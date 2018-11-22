@@ -126,6 +126,7 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 
 	/**
 	 * Sets the input of the outline page
+	 * Initially invoked from ANTRLRv4Editor.java.
 	 * 
 	 * @param input
 	 *            the input of this outline page
