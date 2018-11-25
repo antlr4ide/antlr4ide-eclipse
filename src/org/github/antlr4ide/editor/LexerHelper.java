@@ -19,14 +19,15 @@ import org.eclipse.jface.text.Position;
 public class LexerHelper {
 	private Map<String, Position> parserRules;
 	private Map<String, Position> lexerRules;
+	private Map<String, Position> lexerModes;
 	private List<String> errorList;
 
-	public LexerHelper(Map<String, Position> parserRules, Map<String, Position> lexerRules, List<String> errorList) {
+	public LexerHelper(Map<String, Position> parserRules, Map<String, Position> lexerRules, List<String> errorList, Map<String, Position> lexerModes) {
 		this.parserRules = parserRules;
 		this.lexerRules = lexerRules;
+		this.lexerModes = lexerModes;
 		this.errorList  = errorList;
 	}
-
 	
     BaseErrorListener printError = new BaseErrorListener() {
         @Override
@@ -109,17 +110,15 @@ public class LexerHelper {
 		public Void visitParserRuleSpec(ANTLRv4Parser.ParserRuleSpecContext ctx) {
 			// Track this for outline and cross references
 			/*
-			 * parserRuleSpec : DOC_COMMENT* ruleModifiers? RULE_REF argActionBlock?
-			 * ruleReturns? throwsSpec? localsSpec? rulePrequel* COLON ruleBlock SEMI
-			 * exceptionGroup
+			 * parserRuleSpec : DOC_COMMENT* ruleModifiers? RULE_REF argActionBlock? ruleReturns? throwsSpec? localsSpec? rulePrequel* COLON ruleBlock SEMI exceptionGroup
 			 */
 
 //			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitParserRuleSpec. Defining parser rule >" + ctx.RULE_REF().getText() + "<");
 
-			int a=ctx.start.getStartIndex(); // ctx.RULE_REF().getSymbol().getStartIndex()
-			int b=ctx.stop.getStopIndex();  // ctx.RULE_REF().getSymbol().getStopIndex()
+			int a=ctx.start.getStartIndex();
+			int b=ctx.stop.getStopIndex();  
 
-			Position position = new Position(a,b-a); // mark the whole rule
+			Position position = new Position(a,b-a); // mark the whole parserRuleSpec
 			
 			emitParserRule(ctx.RULE_REF().getText(), position);
 
@@ -130,23 +129,40 @@ public class LexerHelper {
 		public Void visitLexerRuleSpec(ANTLRv4Parser.LexerRuleSpecContext ctx) {
 			// Track this for outline and cross references
 			/*
-			 * parserRuleSpec : DOC_COMMENT* ruleModifiers? RULE_REF argActionBlock?
-			 * ruleReturns? throwsSpec? localsSpec? rulePrequel* COLON ruleBlock SEMI
-			 * exceptionGroup
+			 * lexerRuleSpec
+			 *    : DOC_COMMENT* FRAGMENT? TOKEN_REF COLON lexerRuleBlock SEMI
 			 */
 
 //			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitLexerRuleSpec. Defining lexer rule >" + ctx.TOKEN_REF().getText() + "<");
 			
-			int a=ctx.start.getStartIndex(); // ctx.TOKEN_REF().getSymbol().getStartIndex()
-			int b=ctx.stop.getStopIndex();  // ctx.TOKEN_REF().getSymbol().getStopIndex()
+			int a=ctx.start.getStartIndex();
+			int b=ctx.stop.getStopIndex(); 
 
-			Position position = new Position(a,b-a); // mark the whole rule
+			Position position = new Position(a,b-a); // mark the whole lexerRuleSpec
 
 			emitLexerRule(ctx.TOKEN_REF().getText(), position);
 
 			return visitChildren(ctx); // continue the visit
 		}
 
+		@Override
+		public Void visitModeSpec(ANTLRv4Parser.ModeSpecContext ctx) {
+			// Track this for outline and cross references
+			/*
+			 * modeSpec
+			 *    : MODE identifier SEMI lexerRuleSpec*
+			 */
+
+			int a=ctx.start.getStartIndex();
+			int b=ctx.stop.getStopIndex();  
+
+			Position position = new Position(a,b-a); // mark the whole modeSpec
+
+			emitLexerMode(ctx.identifier().getText(), position);
+
+			return visitChildren(ctx); // continue the visit
+		}
+		
 	}
 
 	private void emitParserRule(String text, Position position) {
@@ -154,6 +170,9 @@ public class LexerHelper {
 	}
 	private void emitLexerRule(String text, Position position) {
 		lexerRules.put(text, position);
+	}
+	private void emitLexerMode(String text, Position position) {
+		lexerModes.put(text, position);
 	}
 
 }

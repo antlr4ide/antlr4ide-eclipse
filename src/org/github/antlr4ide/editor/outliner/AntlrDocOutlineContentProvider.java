@@ -33,9 +33,10 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 		
 		if(element instanceof IFileEditorInput) {
 			// Outline Root
-			Object ret[]=new Object[2];
+			Object ret[]=new Object[3];
 			ret[0]=new OutlineRootElement("Parser Rules",0);
 			ret[1]=new OutlineRootElement("Lexer Rules",1);
+			ret[2]=new OutlineRootElement("Lexer Modes", 2);
 			return ret ;
 		}
 		
@@ -54,6 +55,7 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 			Integer type= ((OutlineRootElement)element).getType();
 			if(type==0) return doc.getParserRules().isEmpty()==false;
 			if(type==1) return doc.getLexerRules().isEmpty()==false;
+			if(type==2) return doc.getLexerModes().isEmpty()==false;
 		}
 		return false;
 	}
@@ -78,6 +80,7 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 			Integer type= ((OutlineRootElement)element).getType();
 			if(type==0) return doc.getParserRules().keySet().toArray();
 			if(type==1) return doc.getLexerRules().keySet().toArray();
+			if(type==2) return doc.getLexerModes().keySet().toArray();
 		}
 		
 		return new Object[0];

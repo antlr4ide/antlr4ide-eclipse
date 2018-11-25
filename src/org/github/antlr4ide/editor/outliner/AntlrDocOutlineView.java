@@ -112,6 +112,8 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 				pos = doc.getParserRules().get(selection.getFirstElement());
 				if (pos == null)
 					pos = doc.getLexerRules().get(selection.getFirstElement());
+				if (pos == null)
+					pos = doc.getLexerModes().get(selection.getFirstElement());
 			}
 
 			if (pos != null) {

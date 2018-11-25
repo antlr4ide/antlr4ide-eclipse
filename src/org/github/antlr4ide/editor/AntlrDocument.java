@@ -28,6 +28,7 @@ public class AntlrDocument extends Document implements IDocument {
 	List<Token> antlrTokens = new ArrayList<Token>();
 	private Map<String,Position> parserRules=new HashMap<String, Position>();
 	private Map<String,Position> lexerRules=new HashMap<String, Position>();
+	private Map<String,Position> lexerModes=new HashMap<String, Position>();
 	List<String> errorList = new ArrayList<String>();
 	private ANTLRv4Editor editor;
 	
@@ -42,7 +43,7 @@ public class AntlrDocument extends Document implements IDocument {
 	 */
 	public void scan() {
 		errorList.clear();
-		LexerHelper lexer = new LexerHelper(getParserRules(), getLexerRules(), errorList);
+		LexerHelper lexer = new LexerHelper(getParserRules(), getLexerRules(), errorList,lexerModes);
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
 		processErrors(errorList);
 	}
@@ -111,6 +112,13 @@ public class AntlrDocument extends Document implements IDocument {
 			AntlrDocument doc=(AntlrDocument)  event.getDocument();
 			doc.scan();
 	}
+	}
+
+	
+	
+	// return the detected lexer modes
+	public Map<String, Position> getLexerModes() {
+		return lexerModes;
 	}
 	
 
