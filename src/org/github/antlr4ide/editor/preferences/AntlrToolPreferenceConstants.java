@@ -30,14 +30,14 @@ public class AntlrToolPreferenceConstants {
 
 	
 	// Folding Constants from com.github.jknack.antlr4ide.ui.folding.Antlr4FoldingPreferenceStoreInitializer
-	public static final String P_ENABLED        = "folding.enabled";
-	public static final String P_OPTIONS        = "folding.options";
-	public static final String P_TOKENS         = "folding.tokens";
-	public static final String P_COMMENTS       = "folding.comments";
-	public static final String P_GRAMMAR_ACTION = "folding.grammarAction";
-	public static final String P_RULE_ACTION    = "folding.ruleAction";
-	public static final String P_RULE           = "folding.rule";
-	public static final String P_LEXER_RULE     = "folding.lexerRule";
+	public static final String P_FOLDING_ENABLED        = "folding.enabled";
+	public static final String P_FOLDING_OPTIONS        = "folding.options";
+	public static final String P_FOLDING_TOKENS         = "folding.tokens";
+	public static final String P_FOLDING_COMMENTS       = "folding.comments";
+	public static final String P_FOLDING_GRAMMAR_ACTION = "folding.grammarAction";
+	public static final String P_FOLDING_RULE_ACTION    = "folding.ruleAction";
+	public static final String P_FOLDING_PARSER_RULE    = "folding.rule";
+	public static final String P_FOLDING_LEXER_RULE     = "folding.lexerRule";
 	
-	public static final String P_LABEL_01       = "folding.label_01";
+	public static final String P_FOLDING_LABEL_01       = "folding.label_01";
 }
