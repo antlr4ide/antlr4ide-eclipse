@@ -5,19 +5,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.jface.text.source.IVerticalRuler;
-import org.eclipse.jface.text.source.SourceViewerConfiguration;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.github.antlr4ide.editor.outliner.AntlrDocOutlineView;
+import org.github.antlr4ide.editor.preferences.AntlrToolPreferenceConstants;
 
 
 public class ANTLRv4Editor extends TextEditor implements IAdaptable {
@@ -30,22 +32,16 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		super();
 		setSourceViewerConfiguration(new ANTLRv4Configuration());
 		setDocumentProvider(new ANTLRv4DocumentProvider(this));
+		
+		//TODO ADD public void addPropertyChangeListener(IPropertyChangeListener listener);
+		IPreferenceStore xx = PlatformUI.getPreferenceStore();
+        System.out.println("ANTLRv4Editor - Preference "+AntlrToolPreferenceConstants.P_FOLDING_ENABLED+":"+xx.getBoolean(AntlrToolPreferenceConstants.P_FOLDING_ENABLED));
 	}
 
-		/*
-		 * This method is exposing the source viewer configuration. 
-		 * This is used by various parts of the editor
-		 * - outliner to get to the scanner that contains the map of parserrules and lexerrules
-		 */
-		public SourceViewerConfiguration getEditorConfiguration() {
-			return getSourceViewerConfiguration();
-		}
-	
-	
 	
 	public void dispose() {
 		super.dispose();
-		fOutlinePage.dispose();
+		if(fOutlinePage!=null) fOutlinePage.dispose();
 	}
 
 	/* configure outline adaptor */
@@ -60,9 +56,9 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		}
 		return super.getAdapter(required);
 	}
-	
 
 	
+
 	// Folding: https://www.eclipse.org/articles/Article-Folding-in-Eclipse-Text-Editors/folding.html
 	 /* (non-Javadoc)
      * @see org.eclipse.ui.IWorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
