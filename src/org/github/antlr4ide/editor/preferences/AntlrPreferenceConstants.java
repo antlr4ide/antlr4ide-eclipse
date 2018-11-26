@@ -18,6 +18,7 @@ public class AntlrPreferenceConstants {
 	public static final String P_TOOL_GENVISITOR = "antlr4.visitor";
 	public static final String P_TOOL_ENCODING = "antlr4.encoding";
 	public static final String P_TOOL_VMARGS = "antlr4.vmArgs";
+	public static final String P_TOOL_STORE_PARSETREE = "antlr4.storeparsetree";
 
 	// From com.github.jknack.antlr4ide.ui.preferences.BuilderConfigurationBlock
 	// From org.eclipse.xtext.builder.org.eclipse.xtext.builder
