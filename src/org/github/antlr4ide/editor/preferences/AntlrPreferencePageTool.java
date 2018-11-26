@@ -52,18 +52,18 @@ public class AntlrPreferencePageTool extends FieldEditorPreferencePage implement
 		// -------
 		
 		
-		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOLENABLED,	"Tool Enabled",	getFieldEditorParent()));
-		addField(new AntlrVersionListEditor(AntlrPreferenceConstants.P_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrPreferenceConstants.P_OUTDIRECTORY,"Directory (-o)", getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrPreferenceConstants.P_LIB, "Library (-lib)", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOL_ENABLED,	"Tool Enabled",	getFieldEditorParent()));
+		addField(new AntlrVersionListEditor(AntlrPreferenceConstants.P_TOOL_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_TOOL_OUTDIRECTORY,"Directory (-o)", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_TOOL_LIB, "Library (-lib)", getFieldEditorParent()));
 		
-		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_GENLISTENER,	"Generate parse tree listener (-listener)",	getFieldEditorParent()));
-		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_GENVISITOR,	"Generate parse tree visitors (-visitor)",	getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOL_GENLISTENER,	"Generate parse tree listener (-listener)",	getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOL_GENVISITOR,	"Generate parse tree visitors (-visitor)",	getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_CLEANUPDERIVED,	"Delete generated files when clean build is triggered",	getFieldEditorParent()));
 		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_MARKDERIVED,	"Mark generated files as derived",	getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrPreferenceConstants.P_ENCODING, "Encoding (-encoding)", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_TOOL_ENCODING, "Encoding (-encoding)", getFieldEditorParent()));
 		
-		addField(new StringFieldEditor(AntlrPreferenceConstants.P_VMARGS, "VM Arguments", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_TOOL_VMARGS, "VM Arguments", getFieldEditorParent()));
 
 		
 		}
