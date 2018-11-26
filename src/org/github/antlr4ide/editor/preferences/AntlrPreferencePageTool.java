@@ -53,7 +53,7 @@ public class AntlrPreferencePageTool extends FieldEditorPreferencePage implement
 		
 		
 		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOLENABLED,	"Tool Enabled",	getFieldEditorParent()));
-		addField(new AntrVersionListEditor(AntlrPreferenceConstants.P_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
+		addField(new AntlrVersionListEditor(AntlrPreferenceConstants.P_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
 		addField(new StringFieldEditor(AntlrPreferenceConstants.P_OUTDIRECTORY,"Directory (-o)", getFieldEditorParent()));
 		addField(new StringFieldEditor(AntlrPreferenceConstants.P_LIB, "Library (-lib)", getFieldEditorParent()));
 		
@@ -70,10 +70,10 @@ public class AntlrPreferencePageTool extends FieldEditorPreferencePage implement
 	
 	
 	
-	private class AntrVersionListEditor extends ListEditor {
+	private class AntlrVersionListEditor extends ListEditor {
 		private String del=",";
 
-		public AntrVersionListEditor(String label, String content, Composite parent) {
+		public AntlrVersionListEditor(String label, String content, Composite parent) {
 			super(label,content,parent);
 		}
 
