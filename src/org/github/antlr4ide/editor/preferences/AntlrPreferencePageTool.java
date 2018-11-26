@@ -16,9 +16,9 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
-public class AntlrToolPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class AntlrPreferencePageTool extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 
-	public AntlrToolPreferencePage() {
+	public AntlrPreferencePageTool() {
 		super(GRID);
 //		setPreferenceStore(activator.getDefault().getPreferenceStore());
 		setDescription("ANTLR Tool Configuration");

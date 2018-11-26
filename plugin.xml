@@ -16,7 +16,7 @@
   <extension point="org.eclipse.ui.preferencePages">
           <!-- experimenting with new native eclipse pref pages -->
         <page
-            class="org.github.antlr4ide.editor.preferences.AntlrToolPreferencePage"
+            class="org.github.antlr4ide.editor.preferences.AntlrPreferencePageTool"
             id="org.github.antlr4ide.Antlr4.newprefs"
             name="ANTLR 4 IDE TOOL">
             <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
