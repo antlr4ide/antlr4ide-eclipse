@@ -3,6 +3,7 @@ package org.github.antlr4ide.editor;
 import java.util.HashMap;
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.eclipse.jface.text.rules.*;
+import org.github.antlr4ide.editor.antlr.AntlrScanner;
 
 public class ANTLRv4Scanner extends AntlrScanner  {
 

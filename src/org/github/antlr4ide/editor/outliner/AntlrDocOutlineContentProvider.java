@@ -4,7 +4,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
-import org.github.antlr4ide.editor.AntlrDocument;
+import org.github.antlr4ide.editor.antlr.AntlrDocument;
 
 /**
  * Divides the editor's document into ten segments and provides elements for them.

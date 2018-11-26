@@ -1,4 +1,4 @@
-package org.github.antlr4ide.editor;
+package org.github.antlr4ide.editor.antlr;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,6 +17,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.github.antlr4ide.editor.ANTLRv4Editor;
 import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
 /**

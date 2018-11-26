@@ -1,4 +1,4 @@
-package org.github.antlr4ide.editor;
+package org.github.antlr4ide.editor.antlr;
 
 import java.util.List;
 import java.util.Map;

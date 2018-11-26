@@ -8,7 +8,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
-import org.github.antlr4ide.editor.AntlrDocument;
+import org.github.antlr4ide.editor.antlr.AntlrDocument;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
