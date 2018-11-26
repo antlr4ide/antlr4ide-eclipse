@@ -16,6 +16,8 @@ import org.eclipse.jface.text.IDocumentListener;
 import org.eclipse.jface.text.Position;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
+import org.eclipse.ui.PlatformUI;
+import org.github.antlr4ide.editor.preferences.AntlrToolPreferenceConstants;
 
 /**
  * Encapsulation of the needed additions for the antlr parser.
@@ -43,21 +45,26 @@ public class AntlrDocument extends Document implements IDocument {
 	 */
 	public void scan() {
 		errorList.clear();
-		LexerHelper lexer = new LexerHelper(getParserRules(), getLexerRules(), errorList,lexerModes);
+		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
 		processErrors(errorList);
+		processFolding();
+	}
+	private void processFolding() {
+		// TODO Auto-generated method stub
+		boolean val=PlatformUI.getPreferenceStore().getBoolean(AntlrToolPreferenceConstants.P_FOLDING_ENABLED);
+		if(val) {
+			if(PlatformUI.getPreferenceStore().getBoolean(AntlrToolPreferenceConstants.P_FOLDING_LEXER_MODE)) { editor.updateFoldingStructure(lexerModes.values()); }
+		}
 	}
 	public Map<String,Position> getParserRules() {
 		return parserRules;
 	}
-	public void setParserRules(Map<String,Position> parserRules) {
-		this.parserRules = parserRules;
-	}
 	public Map<String,Position> getLexerRules() {
 		return lexerRules;
 	}
-	public void setLexerRules(Map<String,Position> lexerRules) {
-		this.lexerRules = lexerRules;
+	public Map<String, Position> getLexerModes() {
+		return lexerModes;
 	}
 	public void setEditor(ANTLRv4Editor editor) {
 		this.editor=editor;
@@ -116,10 +123,28 @@ public class AntlrDocument extends Document implements IDocument {
 
 	
 	
-	// return the detected lexer modes
-	public Map<String, Position> getLexerModes() {
-		return lexerModes;
-	}
 	
 
+//	public class AntlrFoldingPropertyChangeListener implements IPropertyChangeListener {
+//	public AntlrFoldingPropertyChangeListener() {
+//		System.out.println("AntlrFoldingPropertyChangeListener " );
+//	}
+//	@Override
+//	public void propertyChange(PropertyChangeEvent e) {
+//		Composite fieldEditorParent = getFieldEditorParent();
+//		System.out.println("AntlrFoldingPropertyChangeListener - PropertyChange " + e.getProperty() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
+//		if (e.getProperty().equals(AntlrToolPreferenceConstants.P_FOLDING_ENABLED)) {
+//			Boolean val=(Boolean) e.getNewValue();
+//				// enable/disable all the fields
+//				for (int i = 2; i < fields.length; i++) {
+//					fields[i].setEnabled(val, fieldEditorParent);
+//					fields[i].getLabelControl(fieldEditorParent).setEnabled(val);
+//				}
+//		}
+//	}
+//}
+
+
+
+	
 }

@@ -38,6 +38,7 @@ public class AntlrToolPreferenceConstants {
 	public static final String P_FOLDING_RULE_ACTION    = "folding.ruleAction";
 	public static final String P_FOLDING_PARSER_RULE    = "folding.rule";
 	public static final String P_FOLDING_LEXER_RULE     = "folding.lexerRule";
+	public static final String P_FOLDING_LEXER_MODE     = "folding.lexerMode";
 	
 	public static final String P_FOLDING_LABEL_01       = "folding.label_01";
 }

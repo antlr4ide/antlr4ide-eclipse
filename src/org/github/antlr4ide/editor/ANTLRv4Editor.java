@@ -1,5 +1,6 @@
 package org.github.antlr4ide.editor;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,8 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 	
 	public void updateFoldingStructure(List<Position> positions)
 	{   System.out.println("ANTLRv4Editor - updateFoldingStructure");
+	    if(annotationModel==null) return; // too early
+		if(positions.size()==0) return;   // empty list
 		Annotation[] annotations = new Annotation[positions.size()];
 		
 		//this will hold the new annotations along
@@ -116,7 +119,34 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
     	getSourceViewerDecorationSupport(viewer);
     	
     	return viewer;
-    }	
+    }
+
+
+
+    public void updateFoldingStructure(Collection<Position> positions) {
+	    if(annotationModel==null) return; // too early
+    	if(positions.size()==0) return;
+    	
+		Annotation[] annotations = new Annotation[positions.size()];
+		
+		//this will hold the new annotations along
+		//with their corresponding positions
+		Map<ProjectionAnnotation,Position> newAnnotations = new HashMap<>();
+		
+		int i =0;
+		for(Position p:positions)
+		{
+			ProjectionAnnotation annotation = new ProjectionAnnotation();
+			newAnnotations.put(annotation,p);
+			annotations[i]=annotation;
+			i++;
+		}
+		
+		annotationModel.modifyAnnotations(oldAnnotations,newAnnotations,null);
+		
+		oldAnnotations=annotations;
+		
+	}	
 	
 	/* --------------------------------------------------------------
 	 * SET EDITOR AS READONLY
