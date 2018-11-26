@@ -16,6 +16,7 @@ To capture changes to the document a document listener is added in [AntlrDocumen
 The scanner and parser is invoked from [LexerHelper](https://github.com/antlr4ide/antlr4ide-eclipse/blob/master/src/org/github/antlr4ide/editor/LexerHelper.java) and the visitor [ANTLRv4Visitor](https://github.com/antlr4ide/antlr4ide-eclipse/blob/fbc3fbfacfbb2348c73e01ad1ff7ee4c36472844/src/org/github/antlr4ide/editor/LexerHelper.java#L76) produces 
 1. Map of all parser rules
 1. Map of all lexer rules
+1. Map of all lexer modes
 1. List of all error messages
 
 ### Antlr error messages
@@ -37,11 +38,24 @@ hilite.put(ANTLRv4Lexer.FRAGMENT, stmtTextToken);
 The Outline view uses the lexer rules and parser rules maps that the scanner produced. 
 The outline content provider [AntlrDocOutlineContentProvider](https://github.com/antlr4ide/antlr4ide-eclipse/blob/master/src/org/github/antlr4ide/editor/outliner/AntlrDocOutlineContentProvider.java) takes the content of the maps and add to the outline content.
 
+Supported content in the outline view
+* Lexer Modes
+* Lexer Rules
+* Parser Rules
+
+
+## Working on
+### Folding
+Folding is implemented using the projection framework based on the article [Folding](https://www.eclipse.org/articles/Article-Folding-in-Eclipse-Text-Editors/folding.html)
+
+The scanner creates the maps for Lexer modes, Lexer rules and Parser rules. The maps contains the Positions as Offset and Length. The positions can be used directly by the projection framework.
+
+
+
 ## TODOs
 ### Preference Pages
 ### Preference Pages for hilights
 ### Semantic validation
-### Folding
 ### Code generation (Using eclipse Builders)
 ### Code generation for multiple target languages
 ### Refactoring
