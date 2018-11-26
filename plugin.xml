@@ -22,7 +22,7 @@
             <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
         </page>    
         <page
-            class="org.github.antlr4ide.editor.preferences.AntlrFoldingPreferencePage"
+            class="org.github.antlr4ide.editor.preferences.AntlrPreferencePageFolding"
             id="org.github.antlr4ide.Antlr4.newprefs.folding"
             name="Folding"
             category="org.github.antlr4ide.Antlr4.newprefs">

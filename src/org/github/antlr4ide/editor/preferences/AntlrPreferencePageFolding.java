@@ -12,21 +12,21 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 import org.eclipse.ui.PlatformUI;
 
-public class AntlrFoldingPreferencePage extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
+public class AntlrPreferencePageFolding extends FieldEditorPreferencePage implements IWorkbenchPreferencePage {
 	private FieldEditor fields[];
-	public AntlrFoldingPreferencePage() {
-		// System.out.println("AntlrFoldingPreferencePage");
+	public AntlrPreferencePageFolding() {
+		// System.out.println("AntlrPreferencePageFolding");
 	}
 	@Override
 	public void init(IWorkbench workbench) { 
-		// System.out.println("AntlrFoldingPreferencePage - init " );
+		// System.out.println("AntlrPreferencePageFolding - init " );
 		setPreferenceStore(PlatformUI.getPreferenceStore());
 		setDescription("ANTLR Folding Configuration");
 	}
 
 	@Override
 	protected void createFieldEditors() {
-		// System.out.println("AntlrFoldingPreferencePage - createFieldEditors " );
+		// System.out.println("AntlrPreferencePageFolding - createFieldEditors " );
 		fields= new FieldEditor[] { 
 		 new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_ENABLED, "Enable folding", getFieldEditorParent())
 		,new StringLabel(AntlrToolPreferenceConstants.P_FOLDING_LABEL_01, "Initially fold these elements:", getFieldEditorParent())
