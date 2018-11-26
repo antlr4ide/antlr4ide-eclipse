@@ -28,21 +28,21 @@ public class AntlrPreferencePageFolding extends FieldEditorPreferencePage implem
 	protected void createFieldEditors() {
 		// System.out.println("AntlrPreferencePageFolding - createFieldEditors " );
 		fields= new FieldEditor[] { 
-		 new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_ENABLED, "Enable folding", getFieldEditorParent())
-		,new StringLabel(AntlrToolPreferenceConstants.P_FOLDING_LABEL_01, "Initially fold these elements:", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_COMMENTS, "Comments", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_OPTIONS, "Options", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_TOKENS, "Tokens", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_GRAMMAR_ACTION, "Actions", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_PARSER_RULE, "Parser Rules", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_LEXER_RULE, "Lexer Rules", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_LEXER_MODE, "Lexer Modes", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrToolPreferenceConstants.P_FOLDING_RULE_ACTION, "Rule actions", getFieldEditorParent())
+		 new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_ENABLED, "Enable folding", getFieldEditorParent())
+		,new StringLabel(AntlrPreferenceConstants.P_FOLDING_LABEL_01, "Initially fold these elements:", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_COMMENTS, "Comments", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_OPTIONS, "Options", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_TOKENS, "Tokens", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_GRAMMAR_ACTION, "Actions", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE, "Parser Rules", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_LEXER_RULE, "Lexer Rules", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE, "Lexer Modes", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_RULE_ACTION, "Rule actions", getFieldEditorParent())
 		};
 		
 		for(FieldEditor f: fields) { addField(f); }
 		
-		boolean val=getPreferenceStore().getBoolean(AntlrToolPreferenceConstants.P_FOLDING_ENABLED);
+		boolean val=getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED);
 		updateFields(val);
 		
 		/*

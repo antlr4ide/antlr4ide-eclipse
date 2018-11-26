@@ -52,18 +52,18 @@ public class AntlrToolPreferencePage extends FieldEditorPreferencePage implement
 		// -------
 		
 		
-		addField(new BooleanFieldEditor(AntlrToolPreferenceConstants.P_TOOLENABLED,	"Tool Enabled",	getFieldEditorParent()));
-		addField(new AntrVersionListEditor(AntlrToolPreferenceConstants.P_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrToolPreferenceConstants.P_OUTDIRECTORY,"Directory (-o)", getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrToolPreferenceConstants.P_LIB, "Library (-lib)", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_TOOLENABLED,	"Tool Enabled",	getFieldEditorParent()));
+		addField(new AntrVersionListEditor(AntlrPreferenceConstants.P_DISTRIBUTIONS, "Distributions", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_OUTDIRECTORY,"Directory (-o)", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_LIB, "Library (-lib)", getFieldEditorParent()));
 		
-		addField(new BooleanFieldEditor(AntlrToolPreferenceConstants.P_GENLISTENER,	"Generate parse tree listener (-listener)",	getFieldEditorParent()));
-		addField(new BooleanFieldEditor(AntlrToolPreferenceConstants.P_GENVISITOR,	"Generate parse tree visitors (-visitor)",	getFieldEditorParent()));
-		addField(new BooleanFieldEditor(AntlrToolPreferenceConstants.P_CLEANUPDERIVED,	"Delete generated files when clean build is triggered",	getFieldEditorParent()));
-		addField(new BooleanFieldEditor(AntlrToolPreferenceConstants.P_MARKDERIVED,	"Mark generated files as derived",	getFieldEditorParent()));
-		addField(new StringFieldEditor(AntlrToolPreferenceConstants.P_ENCODING, "Encoding (-encoding)", getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_GENLISTENER,	"Generate parse tree listener (-listener)",	getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_GENVISITOR,	"Generate parse tree visitors (-visitor)",	getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_CLEANUPDERIVED,	"Delete generated files when clean build is triggered",	getFieldEditorParent()));
+		addField(new BooleanFieldEditor(AntlrPreferenceConstants.P_MARKDERIVED,	"Mark generated files as derived",	getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_ENCODING, "Encoding (-encoding)", getFieldEditorParent()));
 		
-		addField(new StringFieldEditor(AntlrToolPreferenceConstants.P_VMARGS, "VM Arguments", getFieldEditorParent()));
+		addField(new StringFieldEditor(AntlrPreferenceConstants.P_VMARGS, "VM Arguments", getFieldEditorParent()));
 
 		
 		}

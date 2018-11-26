@@ -20,7 +20,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
 import org.github.antlr4ide.editor.outliner.AntlrDocOutlineView;
-import org.github.antlr4ide.editor.preferences.AntlrToolPreferenceConstants;
+import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
 
 public class ANTLRv4Editor extends TextEditor implements IAdaptable {
@@ -36,7 +36,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		
 		//TODO ADD public void addPropertyChangeListener(IPropertyChangeListener listener);
 		IPreferenceStore xx = PlatformUI.getPreferenceStore();
-        System.out.println("ANTLRv4Editor - Preference "+AntlrToolPreferenceConstants.P_FOLDING_ENABLED+":"+xx.getBoolean(AntlrToolPreferenceConstants.P_FOLDING_ENABLED));
+        System.out.println("ANTLRv4Editor - Preference "+AntlrPreferenceConstants.P_FOLDING_ENABLED+":"+xx.getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED));
 	}
 
 	

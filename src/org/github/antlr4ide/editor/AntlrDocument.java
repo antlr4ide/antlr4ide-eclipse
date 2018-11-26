@@ -17,7 +17,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
-import org.github.antlr4ide.editor.preferences.AntlrToolPreferenceConstants;
+import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
 /**
  * Encapsulation of the needed additions for the antlr parser.
@@ -52,9 +52,9 @@ public class AntlrDocument extends Document implements IDocument {
 	}
 	private void processFolding() {
 		// TODO Auto-generated method stub
-		boolean val=PlatformUI.getPreferenceStore().getBoolean(AntlrToolPreferenceConstants.P_FOLDING_ENABLED);
+		boolean val=PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED);
 		if(val) {
-			if(PlatformUI.getPreferenceStore().getBoolean(AntlrToolPreferenceConstants.P_FOLDING_LEXER_MODE)) { editor.updateFoldingStructure(lexerModes.values()); }
+			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) { editor.updateFoldingStructure(lexerModes.values()); }
 		}
 	}
 	public Map<String,Position> getParserRules() {
@@ -133,7 +133,7 @@ public class AntlrDocument extends Document implements IDocument {
 //	public void propertyChange(PropertyChangeEvent e) {
 //		Composite fieldEditorParent = getFieldEditorParent();
 //		System.out.println("AntlrFoldingPropertyChangeListener - PropertyChange " + e.getProperty() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
-//		if (e.getProperty().equals(AntlrToolPreferenceConstants.P_FOLDING_ENABLED)) {
+//		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
 //			Boolean val=(Boolean) e.getNewValue();
 //				// enable/disable all the fields
 //				for (int i = 2; i < fields.length; i++) {

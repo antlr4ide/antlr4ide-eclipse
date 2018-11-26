@@ -3,7 +3,7 @@ package org.github.antlr4ide.editor.preferences;
 /**
  * Constant definitions for plug-in preferences
  */
-public class AntlrToolPreferenceConstants {
+public class AntlrPreferenceConstants {
 	// Tool Constants from com.github.jknack.antlr4ide.generator.ToolOptions.xtend
 	// TODO: BUILD_TOOL_PATH = "antlr4.antlrToolPath"
 	// TODO: BUILD_ANTLR_TOOLS = "antlr4.antlrRegisteredTools"
