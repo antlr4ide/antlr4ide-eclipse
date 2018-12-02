@@ -50,6 +50,8 @@ Folding is implemented using the projection framework based on the article [Fold
 
 The scanner creates the maps for Lexer modes, Lexer rules and Parser rules. The maps has the relevant name as key and a position as value. A position ``org.eclipse.jface.text.Position`` is start offset and length. The positions can be used directly by the projection framework.
 
+For now only initial folding of Parser Rules and Lexer Modes is implemented.
+
 ### Preference Pages
 Tool preference page has an option to cache the internal antlr parse tree. This require a version of the antlr tool that supports Serialization. If the parse tree is still valid and if enabled the editor will read the parse tree from the cache instead of regenerating the parsetree.
 Currently [this fork of Antlr](https://github.com/HSorensen/antlr4/tree/lexerinclude) supports caching Java based parsetrees.

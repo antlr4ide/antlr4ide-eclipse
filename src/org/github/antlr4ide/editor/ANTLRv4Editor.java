@@ -33,6 +33,8 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
 	private AntlrDocOutlineView fOutlinePage;
     private ProjectionSupport projectionSupport;
+	private Annotation[] oldAnnotations;
+	private ProjectionAnnotationModel annotationModel;
 
 
 	public ANTLRv4Editor() {
@@ -50,12 +52,6 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		super.doSetInput(input);
 	}
 
-	
-//	@Override
-//	protected void initializeEditor() {
-//		// TODO Auto-generated method stub
-//		super.initializeEditor();
-//	}
 	
 	public void dispose() {
 		super.dispose();
@@ -95,11 +91,12 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		
 		annotationModel = viewer.getProjectionAnnotationModel();
 		
-		((AntlrDocument) ((ANTLRv4DocumentProvider) getDocumentProvider()).getDoc()).processFolding();
+		this.processFoldingProperty(AntlrPreferenceConstants.P_FOLDING_ENABLED
+				                  , PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED));
+		
+//		((AntlrDocument) ((ANTLRv4DocumentProvider) getDocumentProvider()).getDoc()).processFolding();
 		
     }
-	private Annotation[] oldAnnotations;
-	private ProjectionAnnotationModel annotationModel;
 		
     /* (non-Javadoc)
      * @see org.eclipse.ui.texteditor.AbstractTextEditor#createSourceViewer(org.eclipse.swt.widgets.Composite, org.eclipse.jface.text.source.IVerticalRuler, int)
@@ -117,9 +114,14 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
     }
 
 
+	/* --------------------------------------------------------------
+	 * FOLDING CONTROLS FOR EDITOR
+	 */
+    // TODO: Contribute "folding" to text editor popup menu
+    // TODO: Refactor all folding controls to Editor from Document
 	public void removeFoldingStructure() {
 		System.out.println("ANTLRv4Editor - removeFolderStructure - ALL");
-		updateFoldingStructure(new ArrayList<>(), false);
+		annotationModel.removeAllAnnotations();
 	}
 
 	public void removeFoldingStructure(Collection<Position> positions) {
@@ -132,6 +134,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
     public void updateFoldingStructure(Collection<Position> positions, boolean markCollapsed) {
 		System.out.println("ANTLRv4Editor - updateFolderStructure - "+positions + " " + markCollapsed);
+		if(positions==null || positions.size()==0) return;
 
 		Annotation[] annotations = new Annotation[positions.size()];
 		
@@ -158,11 +161,9 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
 
     /**
-     * Receive event when an Editor propery is changed. 
+     * Receive event when an Editor property is changed. 
      * Note this class implements both the IPreferenceChangeListener and IPropertyChangeListener
      * because the Eclipse documentation is not entirely clear on the best way to do this.
-     * @author HenrikSorensen
-     *
      */
 	public class AntlrFoldingPropertyListener implements IPreferenceChangeListener, IPropertyChangeListener {
 	private ANTLRv4Editor editor;
@@ -174,32 +175,42 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 	@Override
 	public void preferenceChange(PreferenceChangeEvent e) {
 		System.out.println("AntlrFoldingPropertyListener - preferenceChange " + e.getKey() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
-		if (e.getKey().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
-			Boolean val=(Boolean) e.getNewValue();
-		}
+		editor.processFoldingProperty(e.getKey(), e.getNewValue());
 	}
 
+
+	// update AntlrDocument to match the folding properties
 	@Override
 	public void propertyChange(PropertyChangeEvent e) {
 		System.out.println("AntlrFoldingPropertyListener - propertyChange " + e.getProperty() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
-		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
-			Boolean val=(Boolean) e.getNewValue();
-			if(val)
-			  ((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().processFolding();
-			else
-			  editor.removeFoldingStructure();			
-		}
-		else
-		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) { 
-			Boolean val=(Boolean) e.getNewValue();
-			if(val)
-				  ((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().processFolding();
-			else
-				editor.removeFoldingStructure(((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().getLexerModes().values());
+		editor.processFoldingProperty(e.getProperty(), e.getNewValue());
 		}
 	}
-}
 
+	public void processFoldingProperty(String property, Object value) {
+		System.out.println("AntlrFoldingPropertyListener - processFoldingProperty " + property + " value " + value );
+		System.out.println("--- "+this.getClass());
+		System.out.println("--- "+this.getDocumentProvider());
+		System.out.println("--- "+this.getDocumentProvider().getClass());
+		
+		if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)
+		 || property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)
+		 || property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)
+		) { AntlrDocument doc=((ANTLRv4DocumentProvider)this.getDocumentProvider()).getDoc();
+			Boolean v = (Boolean) value;
+			if(v) { // value is true
+				doc.processFolding();
+			}
+			else { // value is false
+			 	 if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED))     this.removeFoldingStructure();
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE))  this.removeFoldingStructure(doc.getLexerModes().values());
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) this.removeFoldingStructure(doc.getParserRules().values());
+			}
+		}
+	}
+	/* FOLDING CONTROLS DONE 
+	 * -------------------------------------------------------------- 
+	 */
     
 	/* --------------------------------------------------------------
 	 * SET EDITOR AS READONLY

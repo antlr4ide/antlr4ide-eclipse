@@ -34,7 +34,7 @@ public class AntlrPreferencePageFolding extends FieldEditorPreferencePage implem
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_OPTIONS, "Options (tbd)", getFieldEditorParent())
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_TOKENS, "Tokens (tbd)", getFieldEditorParent())
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_GRAMMAR_ACTION, "Actions (tbd)", getFieldEditorParent())
-		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE, "Parser Rules (tbd)", getFieldEditorParent())
+		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE, "Parser Rules", getFieldEditorParent())
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_LEXER_RULE, "Lexer Rules (tbd)", getFieldEditorParent())
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE, "Lexer Modes", getFieldEditorParent())
 		,new CheckBoxEditor(AntlrPreferenceConstants.P_FOLDING_RULE_ACTION, "Rule actions (tbd)", getFieldEditorParent())

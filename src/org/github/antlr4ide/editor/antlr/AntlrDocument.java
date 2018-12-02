@@ -47,18 +47,23 @@ public class AntlrDocument extends Document implements IDocument {
 	public void scan() {
 		System.out.println("AntlrDocument - scan " );
 		errorList.clear();
+//		parserRules.clear();
+//		lexerModes.clear();
 		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
 		processErrors(errorList);
 //		processFolding();
 	}
 	public void processFolding() {
-		// TODO Auto-generated method stub
+		// Update ANTLRv4Editor to match the folding properties
 		boolean val=PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED);
 		System.out.println("AntlrDocument - processFolding folding enabled >" +val +"<");
 		if(val) {
 			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) 
 			{ editor.updateFoldingStructure(lexerModes.values(),true); 
+			}
+			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) 
+			{ editor.updateFoldingStructure(parserRules.values(),true); 
 			}
 		}
 	}
