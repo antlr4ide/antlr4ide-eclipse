@@ -20,14 +20,14 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 	public ANTLRv4DocumentProvider(ANTLRv4Editor antlRv4Editor) { 
 		super();
 		this.editor=antlRv4Editor;
-		System.out.println(">>> ANTLRv4DocumentProvider editor>" + editor + "<");
+		System.out.println("ANTLRv4DocumentProvider - editor>" + editor + "<");
 	}
 
 
 	@Override
 	protected IDocument createDocument(Object element) throws CoreException {
 		if (DEBUG) {
-			System.out.println(">>> ANTLRv4DocumentProvider.createDocument element>" + element.getClass() + "<");
+			System.out.println("ANTLRv4DocumentProvider - createDocument element>" + element.getClass() + "<");
 //			Exception ex = new Exception();
 //			int i = 0;
 //			for (StackTraceElement ste : ex.getStackTrace()) {
@@ -52,6 +52,7 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 			partitioner.connect(document);
 			document.setDocumentPartitioner(partitioner);
 			doc.setEditor(this.editor);
+			// TODO: Check if scan can has to be done from Editor, because the doc.scan() method contributes to the editor views.
 			if(document.getLength()>0)
 			  this.doc.scan(); // set the initial list of tokens.
 		}
@@ -68,7 +69,7 @@ public class ANTLRv4DocumentProvider extends FileDocumentProvider {
 	}
 	
 	
-	public IDocument getDoc() {
+	public AntlrDocument getDoc() {
 		return doc;
 	}
 

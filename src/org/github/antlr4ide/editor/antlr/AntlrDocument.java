@@ -45,17 +45,21 @@ public class AntlrDocument extends Document implements IDocument {
 	 * The parser- and lexerRules maps are used to populate the outline view.
 	 */
 	public void scan() {
+		System.out.println("AntlrDocument - scan " );
 		errorList.clear();
 		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
 		processErrors(errorList);
-		processFolding();
+//		processFolding();
 	}
-	private void processFolding() {
+	public void processFolding() {
 		// TODO Auto-generated method stub
 		boolean val=PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED);
+		System.out.println("AntlrDocument - processFolding folding enabled >" +val +"<");
 		if(val) {
-			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) { editor.updateFoldingStructure(lexerModes.values()); }
+			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) 
+			{ editor.updateFoldingStructure(lexerModes.values(),true); 
+			}
 		}
 	}
 	public Map<String,Position> getParserRules() {
@@ -119,33 +123,9 @@ public class AntlrDocument extends Document implements IDocument {
 //			System.out.println("documentChanged " +event);
 			AntlrDocument doc=(AntlrDocument)  event.getDocument();
 			doc.scan();
+			doc.processFolding();
 	}
 	}
-
-	
-	
-	
-
-//	public class AntlrFoldingPropertyChangeListener implements IPropertyChangeListener {
-//	public AntlrFoldingPropertyChangeListener() {
-//		System.out.println("AntlrFoldingPropertyChangeListener " );
-//	}
-//	@Override
-//	public void propertyChange(PropertyChangeEvent e) {
-//		Composite fieldEditorParent = getFieldEditorParent();
-//		System.out.println("AntlrFoldingPropertyChangeListener - PropertyChange " + e.getProperty() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
-//		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
-//			Boolean val=(Boolean) e.getNewValue();
-//				// enable/disable all the fields
-//				for (int i = 2; i < fields.length; i++) {
-//					fields[i].setEnabled(val, fieldEditorParent);
-//					fields[i].getLabelControl(fieldEditorParent).setEnabled(val);
-//				}
-//		}
-//	}
-//}
-
-
 
 	
 }

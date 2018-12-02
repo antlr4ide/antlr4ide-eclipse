@@ -1,12 +1,14 @@
 package org.github.antlr4ide.editor;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.IPreferenceChangeListener;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences.PreferenceChangeEvent;
 import org.eclipse.jface.text.Position;
 import org.eclipse.jface.text.source.Annotation;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -15,10 +17,14 @@ import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
 import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.text.source.projection.ProjectionSupport;
 import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.util.PropertyChangeEvent;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.editors.text.TextEditor;
 import org.eclipse.ui.views.contentoutline.IContentOutlinePage;
+import org.github.antlr4ide.editor.antlr.AntlrDocument;
 import org.github.antlr4ide.editor.outliner.AntlrDocOutlineView;
 import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
@@ -33,12 +39,23 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		super();
 		setSourceViewerConfiguration(new ANTLRv4Configuration());
 		setDocumentProvider(new ANTLRv4DocumentProvider(this));
-		
-		//TODO ADD public void addPropertyChangeListener(IPropertyChangeListener listener);
-		IPreferenceStore xx = PlatformUI.getPreferenceStore();
-        System.out.println("ANTLRv4Editor - Preference "+AntlrPreferenceConstants.P_FOLDING_ENABLED+":"+xx.getBoolean(AntlrPreferenceConstants.P_FOLDING_ENABLED));
+
+		// Setup property change listener
+		PlatformUI.getPreferenceStore().addPropertyChangeListener(new AntlrFoldingPropertyListener(this));
 	}
 
+	@Override
+	protected void doSetInput(IEditorInput input) throws CoreException {
+		System.out.println("ANTLRv4Editor - doSetInput "+input);
+		super.doSetInput(input);
+	}
+
+	
+//	@Override
+//	protected void initializeEditor() {
+//		// TODO Auto-generated method stub
+//		super.initializeEditor();
+//	}
 	
 	public void dispose() {
 		super.dispose();
@@ -58,7 +75,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		return super.getAdapter(required);
 	}
 
-	
+
 
 	// Folding: https://www.eclipse.org/articles/Article-Folding-in-Eclipse-Text-Editors/folding.html
 	 /* (non-Javadoc)
@@ -78,34 +95,12 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		
 		annotationModel = viewer.getProjectionAnnotationModel();
 		
+		((AntlrDocument) ((ANTLRv4DocumentProvider) getDocumentProvider()).getDoc()).processFolding();
+		
     }
 	private Annotation[] oldAnnotations;
 	private ProjectionAnnotationModel annotationModel;
-	
-	public void updateFoldingStructure(List<Position> positions)
-	{   System.out.println("ANTLRv4Editor - updateFoldingStructure");
-	    if(annotationModel==null) return; // too early
-		if(positions.size()==0) return;   // empty list
-		Annotation[] annotations = new Annotation[positions.size()];
 		
-		//this will hold the new annotations along
-		//with their corresponding positions
-		Map<ProjectionAnnotation,Position> newAnnotations = new HashMap<>();
-		
-		for(int i =0;i<positions.size();i++)
-		{
-			ProjectionAnnotation annotation = new ProjectionAnnotation();
-			
-			newAnnotations.put(annotation,positions.get(i));
-			
-			annotations[i]=annotation;
-		}
-		
-		annotationModel.modifyAnnotations(oldAnnotations,newAnnotations,null);
-		
-		oldAnnotations=annotations;
-	}
-	
     /* (non-Javadoc)
      * @see org.eclipse.ui.texteditor.AbstractTextEditor#createSourceViewer(org.eclipse.swt.widgets.Composite, org.eclipse.jface.text.source.IVerticalRuler, int)
      */
@@ -122,11 +117,22 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
     }
 
 
+	public void removeFoldingStructure() {
+		System.out.println("ANTLRv4Editor - removeFolderStructure - ALL");
+		updateFoldingStructure(new ArrayList<>(), false);
+	}
 
-    public void updateFoldingStructure(Collection<Position> positions) {
-	    if(annotationModel==null) return; // too early
-    	if(positions.size()==0) return;
-    	
+	public void removeFoldingStructure(Collection<Position> positions) {
+		System.out.println("ANTLRv4Editor - removeFolderStructure - select positions");
+		for(Annotation a: oldAnnotations) {
+		    if(positions.contains(annotationModel.getPosition(a)))
+				annotationModel.removeAnnotation(a);
+		}
+	}
+
+    public void updateFoldingStructure(Collection<Position> positions, boolean markCollapsed) {
+		System.out.println("ANTLRv4Editor - updateFolderStructure - "+positions + " " + markCollapsed);
+
 		Annotation[] annotations = new Annotation[positions.size()];
 		
 		//this will hold the new annotations along
@@ -139,6 +145,8 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 			ProjectionAnnotation annotation = new ProjectionAnnotation();
 			newAnnotations.put(annotation,p);
 			annotations[i]=annotation;
+			if(markCollapsed)
+			annotation.markCollapsed();
 			i++;
 		}
 		
@@ -147,7 +155,52 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		oldAnnotations=annotations;
 		
 	}	
-	
+
+
+    /**
+     * Receive event when an Editor propery is changed. 
+     * Note this class implements both the IPreferenceChangeListener and IPropertyChangeListener
+     * because the Eclipse documentation is not entirely clear on the best way to do this.
+     * @author HenrikSorensen
+     *
+     */
+	public class AntlrFoldingPropertyListener implements IPreferenceChangeListener, IPropertyChangeListener {
+	private ANTLRv4Editor editor;
+	public AntlrFoldingPropertyListener(ANTLRv4Editor editor) {
+		System.out.println("AntlrFoldingPropertyListener " );
+		this.editor=editor;
+	}
+
+	@Override
+	public void preferenceChange(PreferenceChangeEvent e) {
+		System.out.println("AntlrFoldingPropertyListener - preferenceChange " + e.getKey() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
+		if (e.getKey().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
+			Boolean val=(Boolean) e.getNewValue();
+		}
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent e) {
+		System.out.println("AntlrFoldingPropertyListener - propertyChange " + e.getProperty() + " changed from " + e.getOldValue() + " to " + e.getNewValue());
+		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)) {
+			Boolean val=(Boolean) e.getNewValue();
+			if(val)
+			  ((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().processFolding();
+			else
+			  editor.removeFoldingStructure();			
+		}
+		else
+		if (e.getProperty().equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) { 
+			Boolean val=(Boolean) e.getNewValue();
+			if(val)
+				  ((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().processFolding();
+			else
+				editor.removeFoldingStructure(((ANTLRv4DocumentProvider) editor.getDocumentProvider()).getDoc().getLexerModes().values());
+		}
+	}
+}
+
+    
 	/* --------------------------------------------------------------
 	 * SET EDITOR AS READONLY
 	 */
