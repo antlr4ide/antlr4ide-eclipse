@@ -48,12 +48,15 @@ Supported content in the outline view
 ### Folding
 Folding is implemented using the projection framework based on the article [Folding](https://www.eclipse.org/articles/Article-Folding-in-Eclipse-Text-Editors/folding.html)
 
-The scanner creates the maps for Lexer modes, Lexer rules and Parser rules. The maps contains the Positions as Offset and Length. The positions can be used directly by the projection framework.
+The scanner creates the maps for Lexer modes, Lexer rules and Parser rules. The maps has the relevant name as key and a position as value. A position ``org.eclipse.jface.text.Position`` is start offset and length. The positions can be used directly by the projection framework.
 
+### Preference Pages
+Tool preference page has an option to cache the internal antlr parse tree. This require a version of the antlr tool that supports Serialization. If the parse tree is still valid and if enabled the editor will read the parse tree from the cache instead of regenerating the parsetree.
+Currently [this fork of Antlr](https://github.com/HSorensen/antlr4/tree/lexerinclude) supports caching Java based parsetrees.
 
+If there is interest to support this for other targets please raise an issue [antlride-eclipse-issue](https://github.com/antlr4ide/antlr4ide-eclipse/issues)
 
 ## TODOs
-### Preference Pages
 ### Preference Pages for hilights
 ### Semantic validation
 ### Code generation (Using eclipse Builders)
