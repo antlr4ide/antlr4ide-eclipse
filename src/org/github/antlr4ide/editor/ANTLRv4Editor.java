@@ -134,7 +134,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 
     public void updateFoldingStructure(Collection<Position> positions, boolean markCollapsed) {
 		System.out.println("ANTLRv4Editor - updateFolderStructure - "+positions + " " + markCollapsed);
-		if(positions==null || positions.size()==0) return;
+		if(positions.size()==0) return;
 
 		Annotation[] annotations = new Annotation[positions.size()];
 		
