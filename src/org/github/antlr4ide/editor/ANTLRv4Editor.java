@@ -1,6 +1,5 @@
 package org.github.antlr4ide.editor;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -149,7 +148,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 			newAnnotations.put(annotation,p);
 			annotations[i]=annotation;
 			if(markCollapsed)
-			annotation.markCollapsed();
+				annotation.markCollapsed();
 			i++;
 		}
 		
