@@ -72,3 +72,33 @@ If there is interest to support this for other targets please raise an issue [an
 ### Eclipse Help
 ### Eclipse Tutorial
 
+# TIPS and TRICKS from 
+
+This section is for various snippets collected while searching for answers
+
+## getting content of active editor
+
+Currently the editor and document providers are cached. There might be a better way
+
+[Content of Editor](https://stackoverflow.com/questions/6661382/get-contents-of-editor)
+
+```java
+public String getCurrentEditorContent() {
+    final IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage()
+        .getActiveEditor();
+    if (!(editor instanceof ITextEditor)) return null;
+    ITextEditor ite = (ITextEditor)editor;
+    IDocument doc = ite.getDocumentProvider().getDocument(ite.getEditorInput());
+    return doc.get();
+}
+```
+
+
+## Right-Click context menu
+
+Searching for adding "folding" to editor context menu.
+
+1. [right-click menu](https://stackoverflow.com/questions/19566844/eclipse-plugin-development-right-click-preferences-menu)
+1. [add right-click menu](https://stackoverflow.com/questions/4726328/eclipse-plugin-development-how-to-add-option-in-right-click-menu)
+1. [Custumize popup](https://www.oxygenxml.com/doc/versions/18/ug-editor/topics/api_faq_customize_author_popup.html)
+
