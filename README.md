@@ -53,8 +53,8 @@ The scanner creates the maps for Lexer modes, Lexer rules and Parser rules. The 
 For now only initial folding of Parser Rules and Lexer Modes is implemented.
 
 ### Preference Pages
-Tool preference page has an option to cache the internal antlr parse tree. This require a version of the antlr tool that supports Serialization. If the parse tree is still valid and if enabled the editor will read the parse tree from the cache instead of regenerating the parsetree.
-Currently [this fork of Antlr](https://github.com/HSorensen/antlr4/tree/lexerinclude) supports caching Java based parsetrees.
+Tool preference page has an option to cache the internal antlr parse tree. This require a version of the antlr tool that supports Serialization. If the parse tree is still valid and if enabled the editor will read the parse tree from the cache instead of regenerating the parse tree.
+Currently [this fork of Antlr](https://github.com/HSorensen/antlr4/tree/lexerinclude) supports caching parse trees for Java target.
 
 If there is interest to support this for other targets please raise an issue [antlride-eclipse-issue](https://github.com/antlr4ide/antlr4ide-eclipse/issues)
 
