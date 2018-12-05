@@ -59,11 +59,11 @@ Currently [this fork of Antlr](https://github.com/HSorensen/antlr4/tree/lexerinc
 If there is interest to support this for other targets please raise an issue [antlride-eclipse-issue](https://github.com/antlr4ide/antlr4ide-eclipse/issues)
 
 #### TODO: Add preferences multiple targets
+#### TODO: Preference Pages for hilights
 
 
 
 ## TODOs
-### Preference Pages for hilights
 ### Semantic validation
 ### Code generation (Using eclipse Builders)
 ### Code generation for multiple target languages
