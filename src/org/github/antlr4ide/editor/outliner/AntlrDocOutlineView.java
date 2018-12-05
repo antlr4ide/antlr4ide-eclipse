@@ -8,7 +8,7 @@ import org.eclipse.ui.texteditor.IDocumentProvider;
 import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.ui.views.contentoutline.ContentOutlinePage;
 import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
-import org.github.antlr4ide.editor.AntlrDocument;
+import org.github.antlr4ide.editor.antlr.AntlrDocument;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -28,7 +28,7 @@ import org.github.antlr4ide.editor.AntlrDocument;
  */
 
 public class AntlrDocOutlineView extends ContentOutlinePage {
-	private boolean DEBUG = true; // debug outline view
+	private boolean DEBUG = !true; // debug outline view
 
 	/**
 	 * The ID of the view as specified by the extension.
@@ -112,6 +112,8 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 				pos = doc.getParserRules().get(selection.getFirstElement());
 				if (pos == null)
 					pos = doc.getLexerRules().get(selection.getFirstElement());
+				if (pos == null)
+					pos = doc.getLexerModes().get(selection.getFirstElement());
 			}
 
 			if (pos != null) {
@@ -126,6 +128,7 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 
 	/**
 	 * Sets the input of the outline page
+	 * Initially invoked from ANTRLRv4Editor.java.
 	 * 
 	 * @param input
 	 *            the input of this outline page
