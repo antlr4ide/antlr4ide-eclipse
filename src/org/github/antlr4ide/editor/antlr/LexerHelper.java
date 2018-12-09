@@ -47,7 +47,7 @@ public class LexerHelper {
         }
       };
 	
-	public List<? extends Token> scanString(String s) {
+	public List<Token> scanString(String s) {
 		long pot[] = new long[4];
 
 		pot[0] = System.currentTimeMillis();
