@@ -124,7 +124,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 	}
 
 	public void removeFoldingStructure(Collection<Position> positions) {
-		System.out.println("ANTLRv4Editor - removeFolderStructure - select positions");
+		System.out.println("ANTLRv4Editor - removeFoldingStructure - select positions");
 		for(Annotation a: oldAnnotations) {
 		    if(positions.contains(annotationModel.getPosition(a)))
 				annotationModel.removeAnnotation(a);

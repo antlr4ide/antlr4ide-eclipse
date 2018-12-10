@@ -8,6 +8,7 @@ import java.util.Map;
 import org.antlr.v4.runtime.Token;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;
@@ -17,6 +18,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.github.antlr4ide.builder.AntlrBuilder;
 import org.github.antlr4ide.editor.ANTLRv4Editor;
 import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
@@ -53,6 +55,7 @@ public class AntlrDocument extends Document implements IDocument {
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
 		processErrors(errorList);
 //		processFolding();
+		// TODO: Check if cached parse trees is enabled by the Antlr tool
 	}
 	public void processFolding() {
 		// Update ANTLRv4Editor to match the folding properties
@@ -81,15 +84,13 @@ public class AntlrDocument extends Document implements IDocument {
 	}
 	
 	private void processErrors(List<String>errorList) {
-		if(errorList.size()==0) return;
-		
 		System.out.println("Syntax errors ("+errorList.size() +"):" + errorList);		
 
 		try {
 		// set any error markers from the scanner
 		IEditorInput input = editor.getEditorInput();
 		IFile file = ((IFileEditorInput) input).getFile();
-		file.deleteMarkers(IMarker.PROBLEM, false, 1);
+		file.deleteMarkers(AntlrBuilder.MARKER_TYPE, false, IResource.DEPTH_ONE);
 		for (String err : errorList) {
 			// annotate resource with errors.
 			// errorlist format line:position:token.getStartIndex():token.getStopIndex():message
@@ -100,7 +101,7 @@ public class AntlrDocument extends Document implements IDocument {
 
 			String mrkAttr[] = { IMarker.SEVERITY, IMarker.LINE_NUMBER, IMarker.MESSAGE, IMarker.CHAR_START, IMarker.CHAR_END };
 			Object mrkValue[] = { IMarker.SEVERITY_ERROR, line, ss[4], start, end };
-			IMarker marker = file.createMarker(IMarker.PROBLEM);
+			IMarker marker = file.createMarker(AntlrBuilder.MARKER_TYPE);
 			marker.setAttributes(mrkAttr, mrkValue);
 		}
 	}
