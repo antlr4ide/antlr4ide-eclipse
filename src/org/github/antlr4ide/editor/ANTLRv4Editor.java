@@ -119,7 +119,7 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
     // TODO: Contribute "folding" to text editor popup menu
     // TODO: Refactor all folding controls to Editor from Document
 	public void removeFoldingStructure() {
-		System.out.println("ANTLRv4Editor - removeFolderStructure - ALL");
+		System.out.println("ANTLRv4Editor - removeFoldingStructure - ALL");
 		annotationModel.removeAllAnnotations();
 	}
 
