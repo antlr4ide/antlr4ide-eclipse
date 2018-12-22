@@ -106,3 +106,8 @@ Searching for adding "folding" to editor context menu.
 1. [add right-click menu](https://stackoverflow.com/questions/4726328/eclipse-plugin-development-how-to-add-option-in-right-click-menu)
 1. [Custumize popup](https://www.oxygenxml.com/doc/versions/18/ug-editor/topics/api_faq_customize_author_popup.html)
 
+
+## Parallel builder, Log listner
+https://github.com/mickaelistria/eclipse-ide-parallel-builds-demo
+https://stackoverflow.com/questions/33718708/is-it-possible-to-generate-builder-code-automatically-in-eclipse-according-to-bu
+
