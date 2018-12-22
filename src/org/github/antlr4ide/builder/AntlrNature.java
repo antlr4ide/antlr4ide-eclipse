@@ -39,6 +39,7 @@ public class AntlrNature implements IProjectNature {
 
 	@Override
 	public void deconfigure() throws CoreException {
+		// TODO: deconfigure of disabled builder does not work as expected. The commands returned is BuildCommand(org.eclipse.ui.externaltools.ExternalToolBuilder) and not the expected AntlrBuild.BUILD_ID
 		System.out.println("AntlrNature - deconfigure");
 		IProjectDescription description = getProject().getDescription();
 		ICommand[] commands = description.getBuildSpec();
