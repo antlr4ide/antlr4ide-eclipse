@@ -130,5 +130,13 @@
       <persistent
             value="true">
       </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+   <consoleFactory
+         class="org.github.antlr4ide.console.AntlrConsoleFactory"
+         icon="icons/console.png"
+         label="Antlr Tool">
+   </consoleFactory>         
    </extension>   
 </plugin>
