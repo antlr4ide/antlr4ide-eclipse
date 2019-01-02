@@ -190,6 +190,10 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		System.out.println("AntlrFoldingPropertyListener - processFoldingProperty " + property + " value " + value );
 		System.out.println("--- "+this.getClass());
 		System.out.println("--- "+this.getDocumentProvider());
+		
+		if(this.getDocumentProvider()==null) return; 	// too soon ?
+		
+		
 		System.out.println("--- "+this.getDocumentProvider().getClass());
 		
 		if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)
