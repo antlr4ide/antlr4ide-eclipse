@@ -2,9 +2,7 @@ package org.github.antlr4ide.builder;
 
 import java.util.Map;
 
-import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
-//import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IResourceDelta;
@@ -13,6 +11,7 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.github.antlr4ide.console.AntlrConsoleFactory;
 
 public class AntlrBuilder extends IncrementalProjectBuilder {
 
@@ -79,7 +78,7 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor)
 			throws CoreException {
-		System.out.println("AntlrBuilder - build - "+kind+" "+args);
+		System.out.println("AntlrBuilder - build - ("+toTextBuildKind(kind)+") "+args);
 		
 		if (kind == IncrementalProjectBuilder.FULL_BUILD) {
 			fullBuild(monitor);
@@ -94,6 +93,16 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		return null;
 	}
 
+	private String toTextBuildKind(int buildKind) {
+		  switch(buildKind) {
+		  case IncrementalProjectBuilder.FULL_BUILD: return "Full";
+		  case IncrementalProjectBuilder.AUTO_BUILD: return "Auto";
+		  case IncrementalProjectBuilder.CLEAN_BUILD: return "Clean";
+		  case IncrementalProjectBuilder.INCREMENTAL_BUILD: return "Incremental";
+		  }
+		  return " fix toTextBuildKind kind: " + buildKind;
+	}
+	
 	protected void clean(IProgressMonitor monitor) throws CoreException {
 		System.out.println("AntlrBuilder - clean ");
 		
