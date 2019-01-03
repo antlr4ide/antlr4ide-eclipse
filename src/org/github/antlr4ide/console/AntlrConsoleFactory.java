@@ -17,7 +17,7 @@ public class AntlrConsoleFactory implements IConsoleFactory {
 	    ConsolePlugin.getDefault().getConsoleManager().showConsoleView( antlrConsole );
 	}
 
-	public IOConsole getConsole() {
+	public static IOConsole getConsole() {
 		System.out.println("AntlrConsoleFactory - getConsole ");
 	    for(IConsole console:ConsolePlugin.getDefault().getConsoleManager().getConsoles()) {
 	    	if(console.getName().equals(ANTLR_CONSOLE)) { return (IOConsole) console; }
