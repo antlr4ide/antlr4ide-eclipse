@@ -11,7 +11,7 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.github.antlr4ide.console.AntlrConsoleFactory;
+import org.github.antlr4ide.builder.tool.AntlrToolJob;
 
 public class AntlrBuilder extends IncrementalProjectBuilder {
 
@@ -114,6 +114,9 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		System.out.println("AntlrBuilder - checkG4 - "+resource.getName()+" "+resource.getFileExtension());
 		if (resource instanceof IFile && resource.getFileExtension().equals("g4")) {
 			IFile file = (IFile) resource;
+			AntlrToolJob job=new AntlrToolJob(file);
+			job.schedule();
+			
 			try {
 				deleteMarkers(file);
 			} catch (CoreException e) {
@@ -141,4 +144,6 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		System.out.println("AntlrBuilder - incrementalBuild");
 		delta.accept(new AntlrDeltaVisitor());
 	}
+	
+
 }
