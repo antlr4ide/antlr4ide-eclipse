@@ -110,4 +110,4 @@ Searching for adding "folding" to editor context menu.
 ## Parallel builder, Log listner
 https://github.com/mickaelistria/eclipse-ide-parallel-builds-demo
 https://stackoverflow.com/questions/33718708/is-it-possible-to-generate-builder-code-automatically-in-eclipse-according-to-bu
-
+https://www.eclipse.org/articles/Article-Builders/builders.html
