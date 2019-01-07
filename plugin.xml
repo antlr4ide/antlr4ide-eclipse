@@ -13,8 +13,12 @@
             id="org.github.antlr4ide.editor.ANTLRv4Editor">
       </editor>
    </extension>
+   
+<!-- 
+ #  PREFERENCES  
+ # -->   
+   
   <extension point="org.eclipse.ui.preferencePages">
-          <!-- experimenting with new native eclipse pref pages -->
         <page
             class="org.github.antlr4ide.editor.preferences.AntlrPreferencePageTool"
             id="org.github.antlr4ide.Antlr4.newprefs"
@@ -29,6 +33,11 @@
             <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
         </page>    
   </extension>
+  
+<!-- 
+ #  NATURE and BUILDER  
+ # -->   
+  
    <extension
          id="antlrBuilder"
          name="Antlr Project Builder"
@@ -120,6 +129,10 @@
          </command>
       </menuContribution>
    </extension>  
+
+<!-- 
+ #  CONSOLE  
+ # -->   
    <extension
          id="antlrProblem"
          name="Antlr Problem"
@@ -139,4 +152,27 @@
          label="Antlr Tool">
    </consoleFactory>         
    </extension>   
+   
+<!-- 
+ #  LAUNCH  
+ # -->   
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+       id="org.github.Antlr4.tool"
+       name="Antlr4"
+       delegate="org.github.antlr4ide.builder.tool.AntlrToolLauncher"
+       delegateName="Antlr4v Launcher"
+       delegateDescription="This is the Antlrv4 launcher. It invokes the antlr tool and generate the specified output."
+       category="org.eclipse.ui.externaltools"
+       modes= "run">
+   </launchConfigurationType>
+  </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+        type="org.github.Antlr4.tool"
+        class="org.github.antlr4ide.builder.tool.AntlrToolLauncherTabGroup"
+        id="org.github.Antlr4.toolTabGroup">
+    </launchConfigurationTabGroup>
+  </extension>
+   
 </plugin>
