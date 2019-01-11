@@ -43,6 +43,15 @@ Supported content in the outline view
 * Lexer Rules
 * Parser Rules
 
+### Building and Launching
+The project nature and build will eventually request the plugin to build the antlr g4 file.
+
+```java
+package org.github.antlr4ide.builder;
+public class AntlrBuilder extends IncrementalProjectBuilder { ... }
+```
+
+
 
 ## Working on
 ### Folding
