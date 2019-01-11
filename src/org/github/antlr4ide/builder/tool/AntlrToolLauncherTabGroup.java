@@ -54,6 +54,7 @@ public class AntlrToolLauncherTabGroup  extends AbstractLaunchConfigurationTabGr
 		    Text _createSection = this.createSection(comp, "Grammar", (SWT.SINGLE | SWT.BORDER), 1, true);
 		    this.fGrammarText = _createSection;
 		    this.createVerticalSpacer(comp, 8);
+		    //TODO: Use the fields from the tool preference page instead of generic text box
 		    Text _createSection_1 = this.createSection(comp, "Arguments", ((SWT.MULTI | SWT.WRAP) | SWT.BORDER), 5, false);
 		    this.fArgsText = _createSection_1;
 		    Text _createSection_2 = this.createSection(comp, "VM Arguments", ((SWT.MULTI | SWT.WRAP) | SWT.BORDER), 5, false);
