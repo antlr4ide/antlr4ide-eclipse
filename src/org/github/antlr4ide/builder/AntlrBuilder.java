@@ -119,6 +119,7 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 			
 			try {
 				deleteMarkers(file);
+				// process markers ...
 			} catch (CoreException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
