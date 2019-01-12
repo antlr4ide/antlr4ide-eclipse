@@ -97,6 +97,46 @@ public class LexerHelper {
 		}
 
 		@Override
+		public Void visitOptionsSpec(ANTLRv4Parser.OptionsSpecContext ctx) {
+		/*
+		optionsSpec
+		   : OPTIONS LBRACE (option SEMI)* RBRACE
+		   ;
+
+		option
+		   : identifier ASSIGN optionValue
+		   ;
+		   */
+			emitOption(ctx.option(0).getText()); // TODO: Deal with multiple options
+			
+			return visitChildren(ctx); // continue the visit
+		}		
+		
+		public Void visitAction(ANTLRv4Parser.ActionContext ctx) {
+			/*
+			 * // Match stuff like @parser::members {int i;}
+			 * action
+			 *    : AT (actionScopeName COLONCOLON)? identifier actionBlock
+			 *    ;
+			 *
+			 * // Scope names could collide with keywords; allow them as ids for action scopes
+			 * actionScopeName
+			 *    : identifier
+			 *    | LEXER
+			 *    | PARSER
+			 *    ;
+			 * 
+			 * actionBlock
+			 *    : BEGIN_ACTION ACTION_CONTENT* END_ACTION
+			 *    ;
+			 */
+			
+			if(ctx.identifier().getText().equals("header")) emitHeader(ctx.actionBlock().getText(" "));
+			
+			return visitChildren(ctx); // continue the visit
+		}
+		
+		@Override
 		public Void visitParserRuleSpec(ANTLRv4Parser.ParserRuleSpecContext ctx) {
 			// Track this for outline and cross references
 			/*
@@ -159,6 +199,13 @@ public class LexerHelper {
 		grammarInfo.getParserRules().put(text, position);
 	}
 	
+	public void emitHeader(String header) {
+		grammarInfo.setGrammarHeaders(header);		}
+
+	public void emitOption(String option) {
+		grammarInfo.setGrammarOptions(option);	
+	}
+
 	public void emitDelegate(String delegate) {
 		grammarInfo.setGrammarDelegates(delegate);
 	}
