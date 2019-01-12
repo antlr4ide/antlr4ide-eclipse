@@ -17,18 +17,13 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import org.eclipse.jface.text.Position;
 
 public class LexerHelper {
-	private Map<String, Position> parserRules;
-	private Map<String, Position> lexerRules;
-	private Map<String, Position> lexerModes;
-	private List<String> errorList;
+	private AntlrGrammarInfo grammarInfo;
 
-	public LexerHelper(Map<String, Position> parserRules, Map<String, Position> lexerRules, List<String> errorList, Map<String, Position> lexerModes) {
-		this.parserRules = parserRules;
-		this.lexerRules = lexerRules;
-		this.lexerModes = lexerModes;
-		this.errorList  = errorList;
+	public LexerHelper(AntlrGrammarInfo grammarInfo) {
+		
+		this.grammarInfo=grammarInfo;
 	}
-	
+
     BaseErrorListener printError = new BaseErrorListener() {
         @Override
         public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol,
@@ -43,7 +38,7 @@ public class LexerHelper {
     		else
     			s= line + ":" + position + "::: " + msg;
 
-        	errorList.add(s);
+    		grammarInfo.getErrorList().add(s);
         }
       };
 	
@@ -79,12 +74,11 @@ public class LexerHelper {
 		@Override
 		public Void visitGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
 			/*
-			 * grammarSpec : DOC_COMMENT* grammarType identifier SEMI prequelConstruct*
-			 * rules modeSpec* EOF
+			 * grammarSpec : DOC_COMMENT* grammarType identifier SEMI prequelConstruct* rules modeSpec* EOF
 			 */
-
-			String id = ctx.identifier().getText(); // name of imported grammar
-//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitGrammarSpec. Grammar name >" + id + "<");
+			
+			emitGrammarName(ctx.identifier().getText());
+			emitGrammarType(ctx.grammarType().getText());
 
 			return visitChildren(ctx); // continue the visit
 		}
@@ -96,12 +90,8 @@ public class LexerHelper {
 			 * delegateGrammar : identifier ASSIGN identifier | identifier
 			 */
 
-			String id = ctx.identifier(0).getText(); // name of imported grammar
-//			String id2;
-//			if (ctx.identifier().size() > 1)
-//				id2 = ctx.identifier(1).getText();
-
-//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitDelegateGrammar. Import name >" + id + "<");
+			// TODO: Deal with multiple Delegates
+			emitDelegate(ctx.identifier(0).getText());
 
 			return visitChildren(ctx); // continue the visit
 		}
@@ -166,13 +156,27 @@ public class LexerHelper {
 	}
 
 	private void emitParserRule(String text, Position position) {
-		parserRules.put(text, position);
+		grammarInfo.getParserRules().put(text, position);
 	}
+	
+	public void emitDelegate(String delegate) {
+		grammarInfo.setGrammarDelegates(delegate);
+	}
+
+	private void emitGrammarName(String name) {
+		grammarInfo.setGrammarName(name);
+	}
+
+	private void emitGrammarType(String type) {
+		grammarInfo.setGrammarType(type);
+	}
+	
+	
 	private void emitLexerRule(String text, Position position) {
-		lexerRules.put(text, position);
+		grammarInfo.getLexerRules().put(text, position);
 	}
 	private void emitLexerMode(String text, Position position) {
-		lexerModes.put(text, position);
+		grammarInfo.getLexerModes().put(text, position);
 	}
 
 }

@@ -1,7 +1,6 @@
 package org.github.antlr4ide.editor.antlr;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,11 +30,12 @@ public class AntlrDocument extends Document implements IDocument {
 
 
 	List<Token> antlrTokens = new ArrayList<Token>();
-	private Map<String,Position> parserRules=new HashMap<String, Position>();
-	private Map<String,Position> lexerRules=new HashMap<String, Position>();
-	private Map<String,Position> lexerModes=new HashMap<String, Position>();
-	List<String> errorList = new ArrayList<String>();
+//	private Map<String,Position> parserRules=new HashMap<String, Position>();
+//	private Map<String,Position> lexerRules=new HashMap<String, Position>();
+//	private Map<String,Position> lexerModes=new HashMap<String, Position>();
+//	List<String> errorList = new ArrayList<String>();
 	private ANTLRv4Editor editor;
+	private AntlrGrammarInfo grammarInfo;
 	
 	/**
 	 * Invoke the antlr parser and lexer for the document.
@@ -48,12 +48,14 @@ public class AntlrDocument extends Document implements IDocument {
 	 */
 	public void scan() {
 		System.out.println("AntlrDocument - scan " );
-		errorList.clear();
+		grammarInfo=new AntlrGrammarInfo(this);
+		grammarInfo.getErrorList().clear();
 //		parserRules.clear();
 //		lexerModes.clear();
-		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
+//		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
+		LexerHelper lexer = new LexerHelper(grammarInfo);
 		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
-		processErrors(errorList);
+		processErrors(grammarInfo.getErrorList());
 //		processFolding();
 		// TODO: Check if cached parse trees is enabled by the Antlr tool
 	}
@@ -63,22 +65,44 @@ public class AntlrDocument extends Document implements IDocument {
 		System.out.println("AntlrDocument - processFolding folding enabled >" +val +"<");
 		if(val) {
 			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) 
-			{ editor.updateFoldingStructure(lexerModes.values(),true); 
+			{ editor.updateFoldingStructure(grammarInfo.getLexerModes().values(),true); 
 			}
 			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) 
-			{ editor.updateFoldingStructure(parserRules.values(),true); 
+			{ editor.updateFoldingStructure(grammarInfo.getParserRules().values(),true); 
 			}
 		}
 	}
+	
+	public AntlrGrammarInfo getGrammarInfo() {
+		return grammarInfo;
+	}
+
+
+	/**
+	 * Deprecated use getGrammarInfo.getParserRules()
+	 * @return
+	 */
+	@Deprecated
 	public Map<String,Position> getParserRules() {
-		return parserRules;
+		return grammarInfo.getParserRules();
 	}
+	/**
+	 * Deprecated use getGrammarInfo.getLexerRules()
+	 * @return
+	 */
+	@Deprecated
 	public Map<String,Position> getLexerRules() {
-		return lexerRules;
+		return grammarInfo.getLexerRules();
 	}
+	/**
+	 * Deprecated use getGrammarInfo.getLexerModes()
+	 * @return
+	 */
+	@Deprecated
 	public Map<String, Position> getLexerModes() {
-		return lexerModes;
+		return grammarInfo.getLexerModes();
 	}
+
 	public void setEditor(ANTLRv4Editor editor) {
 		this.editor=editor;
 	}
