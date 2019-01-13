@@ -9,6 +9,8 @@ import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
 import org.eclipse.debug.core.model.IProcess;
+import org.github.antlr4ide.editor.antlr.AntlrGrammarInfo;
+import org.github.antlr4ide.editor.antlr.LexerHelper;
 
 
 public class AntlrToolLauncher implements ILaunchConfigurationDelegate {
@@ -16,16 +18,19 @@ public class AntlrToolLauncher implements ILaunchConfigurationDelegate {
 	@Override
 	public void launch(ILaunchConfiguration config, String mode, ILaunch launch, IProgressMonitor progress)
 			throws CoreException {
-		//arg0.getWorkingCopy();
 		System.out.println("AntlrToolLauncher - launch - ILaunchConfiguration " +config.getAttributes());
-		File file = new File (config.getAttribute(LaunchConstants.GRAMMAR, "")); 
 		
-		AntlrToolJob job=new AntlrToolJob(file);
+		AntlrGrammarInfo info=new AntlrGrammarInfo();
+		LexerHelper lexerhelper = new LexerHelper(info);
+		String fileName=config.getAttribute(LaunchConstants.GRAMMAR, ""); // name of grammar file
+		File file=new File(fileName);
+		lexerhelper.scan(file);
+
+		
 		progress.worked(10);
 		try {
-			IProcess process=DebugPlugin.newProcess(launch, job.getProcessBuilder().start(), "Antlr Tool");			
+			IProcess process=DebugPlugin.newProcess(launch, AntlrToolProcessBuilder.getProcessBuilder(config,info).start(), "Antlr Tool");			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

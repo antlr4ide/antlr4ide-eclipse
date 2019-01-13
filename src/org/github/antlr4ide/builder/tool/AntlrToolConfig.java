@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.ui.PlatformUI;
+import org.github.antlr4ide.editor.antlr.AntlrGrammarInfo;
 import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
 public class AntlrToolConfig {
@@ -14,7 +15,7 @@ public class AntlrToolConfig {
 		return "C:\\Users\\HenrikSorensen\\git\\antlr4\\tool\\target\\antlr4-4.7.2-SNAPSHOT-complete.jar";
 	}
 	
-	public static List<String> getToolOptions() {
+	public static List<String> getToolOptions(AntlrGrammarInfo grammarInfo) {
 		ArrayList<String> out=new ArrayList<>();
 		
 		
@@ -47,6 +48,8 @@ public class AntlrToolConfig {
 		out.addAll(getBooleanParm("-visitor","-no-visitor",AntlrPreferenceConstants.P_TOOL_GENVISITOR));
 		out.addAll(getStringParm("-encoding",AntlrPreferenceConstants.P_TOOL_ENCODING));
 		out.addAll(getStringParm("-lib",AntlrPreferenceConstants.P_TOOL_LIB));
+		out.addAll(getString("-package",grammarInfo.getGrammarHeaderPackage()));
+		out.add(grammarInfo.getGrammarName4Tool());
 		
 		//TODO -package, depends on grammar file itself.
 		
@@ -66,6 +69,16 @@ public class AntlrToolConfig {
 		return out;
 	};
 
+	private static List<String>getString(String parm, String value) {
+		ArrayList<String> out=new ArrayList<>();
+		if (value!=null && !value.trim().isEmpty()) {
+			out.add(parm);
+			out.add(value);
+		}
+		return out;
+	};
+
+	
 	private static List<String>getBooleanParm(String parmTrue, String parmFalse, String name) {
 		IPreferenceStore ps = PlatformUI.getPreferenceStore();
 		Boolean value = ps.getBoolean(name);

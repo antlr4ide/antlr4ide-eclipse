@@ -48,7 +48,7 @@ public class AntlrDocument extends Document implements IDocument {
 	 */
 	public void scan() {
 		System.out.println("AntlrDocument - scan " );
-		grammarInfo=new AntlrGrammarInfo(this);
+		grammarInfo=new AntlrGrammarInfo();
 		grammarInfo.getErrorList().clear();
 //		parserRules.clear();
 //		lexerModes.clear();

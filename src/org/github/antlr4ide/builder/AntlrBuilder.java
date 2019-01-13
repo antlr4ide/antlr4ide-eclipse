@@ -12,13 +12,18 @@ import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.github.antlr4ide.builder.tool.AntlrToolJob;
+import org.github.antlr4ide.editor.antlr.AntlrGrammarInfo;
+import org.github.antlr4ide.editor.antlr.LexerHelper;
 
 public class AntlrBuilder extends IncrementalProjectBuilder {
 
+	/**
+	 * The AntlrDeltaVisitor is called from incrementalBuild()
+	 */
 	class AntlrDeltaVisitor implements IResourceDeltaVisitor {
 		@Override
 		public boolean visit(IResourceDelta delta) throws CoreException {
-			System.out.println("AntlrBuilder.AntlrDeltaVisitor - visitor - "+delta.getResource().getName()+" ("+toTextDeltaKind(delta.getKind())+")");
+			System.out.println("AntlrBuilder.AntlrDeltaVisitor - visit - "+delta.getResource().getName()+" ("+toTextDeltaKind(delta.getKind())+")");
 			
 			IResource resource = delta.getResource();
 			switch (delta.getKind()) {
@@ -28,10 +33,14 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 				break;
 			case IResourceDelta.REMOVED:
 				// handle removed resource
+				// TODO remove generated files
 				break;
 			case IResourceDelta.CHANGED:
 				// handle changed resource
 				checkG4(resource);
+				break;
+			default:
+				// unhandled change resource
 				break;
 			}
 			//return true to continue visiting children.
@@ -49,6 +58,9 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		}
 	}
 
+	/**
+	 * AntlrResourceVisitor is called from fullBuild
+	 */
 	class AntlrResourceVisitor implements IResourceVisitor {
 		public boolean visit(IResource resource) {
 			System.out.println("AntlrBuilder.AntlrResourceVisitor - visitor - "+resource.getName());
@@ -114,7 +126,11 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		System.out.println("AntlrBuilder - checkG4 - "+resource.getName()+" "+resource.getFileExtension());
 		if (resource instanceof IFile && resource.getFileExtension().equals("g4")) {
 			IFile file = (IFile) resource;
-			AntlrToolJob job=new AntlrToolJob(file);
+			AntlrGrammarInfo info=new AntlrGrammarInfo();
+			LexerHelper lexerhelper = new LexerHelper(info);
+			lexerhelper.scan(file);
+			
+			AntlrToolJob job=new AntlrToolJob(file,info);
 			job.schedule();
 			
 			try {
@@ -145,6 +161,4 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		System.out.println("AntlrBuilder - incrementalBuild");
 		delta.accept(new AntlrDeltaVisitor());
 	}
-	
-
 }

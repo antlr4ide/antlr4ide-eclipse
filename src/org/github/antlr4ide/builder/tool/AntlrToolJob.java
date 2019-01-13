@@ -1,64 +1,53 @@
 package org.github.antlr4ide.builder.tool;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 import org.github.antlr4ide.console.AntlrConsoleFactory;
+import org.github.antlr4ide.editor.ANTLRv4DocumentProvider;
+import org.github.antlr4ide.editor.ANTLRv4Editor;
+import org.github.antlr4ide.editor.antlr.AntlrGrammarInfo;
 
 public class AntlrToolJob extends Job {
 	private IFile file;
-	private File ioFile; // java.io.File
+	private AntlrGrammarInfo grammarInfo;
 
-      public AntlrToolJob(IFile file) {
+      public AntlrToolJob(IFile file, AntlrGrammarInfo info) {
 	         super("AntlrTool Job");
 	         this.setPriority(BUILD);
 	         this.file=file;
-	         this.ioFile=null;
-	}
-      public AntlrToolJob(File ioFile) {
-	         super("AntlrTool Job");
-	         this.setPriority(BUILD);
-	         this.file=null;
-	         this.ioFile=ioFile;
-	}
-    
-    private String getFileName() {
-    	if(this.file!=null) return file.getName();
-    	return this.ioFile.getName();
-    }
+	         this.grammarInfo=info;
+	         
+	         // get meta info from the grammar
+	         // - @header { package ... }
+	         // - options { tokensVocab=... }
+	         // - import ...
+	         System.out.println("AntlrToolJob - file "+file.getName()+ " workbench windows count " + PlatformUI.getWorkbench().getWorkbenchWindowCount());
+			 System.out.println("ANTLR Document found parser"
+			 		+ " type "+info.getGrammarType()
+			 		+ " name " + info.getGrammarName()
+			 		+ " options " + info.getGrammarOptions()
+			 		+ " header " + info.getGrammarHeaders()
+			 		);
+         }
       
-    public ProcessBuilder getProcessBuilder() {
-		// Create Launch for file
-		List<String> command=new ArrayList<>();
-		command.add("java");
-		command.add("-jar");
-		command.add(AntlrToolConfig.getToolJar());
-		command.addAll(AntlrToolConfig.getToolOptions());
-//		command.add("name of grammar");
-			
-		ProcessBuilder toolProcess=new ProcessBuilder(command);
-//		Redirect r= Redirect.to(file);
-//		toolProcess.redirectOutput(destination)
-		
-		return toolProcess;
-    	
-    }
-    
 	public IStatus run(IProgressMonitor monitor) {
-         System.out.println("This is a job ("+getFileName()+")");
+         System.out.println("This is a job ("+file.getName()+")");
          // Send message to Antlr Tool Console
          IOConsoleOutputStream toolout = AntlrConsoleFactory.getConsole().newOutputStream();
          try {
-			toolout.write("TOOL - tbd - "+getFileName()+" ... \n");
-			ProcessBuilder toolProcess=getProcessBuilder();
+			toolout.write("TOOL - tbd - "+file.getName()+" ... \n");
+			ProcessBuilder toolProcess=AntlrToolProcessBuilder.getProcessBuilder(this.file,this.grammarInfo);
 			toolProcess.inheritIO();
 			
 			toolout.write(toolProcess.command().toString()+"\n");

@@ -1,12 +1,15 @@
 package org.github.antlr4ide.editor.antlr;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
-
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.parser.antlr4.ANTLRv4ParserBaseVisitor;
 import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,6 +17,9 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.Position;
 
 public class LexerHelper {
@@ -41,8 +47,80 @@ public class LexerHelper {
     		grammarInfo.getErrorList().add(s);
         }
       };
+
+
+      
+  	public List<Token> scan(File file) {
+  		InputStream stream;
+		List<Token> out=null;
+		
+		try {
+			stream=new FileInputStream(file);
+			out=scan(CharStreams.fromStream(stream));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return out;
+	}
 	
-	public List<Token> scanString(String s) {
+      
+  	public List<Token> scan(IResource resource) {
+		IFile file = (IFile) resource;
+		List<Token> out=null;
+		
+		try {
+			out=scan(CharStreams.fromStream(file.getContents()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return out;
+  	}
+
+  	public List<Token> scan(String content) {
+		return scan(CharStreams.fromString(content));
+  	}
+  	
+
+
+  	public List<Token> scan(CharStream stream) {
+		long pot[] = new long[4];
+
+		pot[0] = System.currentTimeMillis();
+
+		ANTLRv4Lexer lexer = new ANTLRv4Lexer(stream);
+		pot[1] = System.currentTimeMillis();
+		CommonTokenStream tokens = new CommonTokenStream(lexer);
+		ANTLRv4Parser parser = new ANTLRv4Parser(tokens);
+		parser.removeErrorListeners();
+		parser.addErrorListener(printError);
+		parser.setBuildParseTree(true);
+		ParseTree tree = parser.grammarSpec(); 
+		System.out.println(tree.toStringTree());
+		pot[2] = System.currentTimeMillis();
+		ANTLRv4Visitor visitor = new ANTLRv4Visitor();
+		visitor.visit(tree);
+		pot[3] = System.currentTimeMillis();
+
+//		System.out.println("Elapsed time " + (pot[3] - pot[0]));
+//		System.out.println("   lexer     " + (pot[1] - pot[0]));
+//		System.out.println("   parser    " + (pot[2] - pot[1]));
+//		System.out.println("   visitor   " + (pot[3] - pot[2]));
+
+		return tokens.getTokens();		
+  	}
+
+  	
+  	
+  	
+  	@Deprecated
+      public List<Token> scanString(String s) {
 		long pot[] = new long[4];
 
 		pot[0] = System.currentTimeMillis();
@@ -131,7 +209,7 @@ public class LexerHelper {
 			 *    ;
 			 */
 			
-			if(ctx.identifier().getText().equals("header")) emitHeader(ctx.actionBlock().getText(" "));
+			if(ctx.identifier().getText().equals("header")) emitHeader(ctx.actionBlock().getText());
 			
 			return visitChildren(ctx); // continue the visit
 		}
@@ -225,5 +303,6 @@ public class LexerHelper {
 	private void emitLexerMode(String text, Position position) {
 		grammarInfo.getLexerModes().put(text, position);
 	}
+
 
 }
