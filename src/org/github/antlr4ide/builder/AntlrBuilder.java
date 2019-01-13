@@ -11,9 +11,12 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.resources.IncrementalProjectBuilder;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.preference.IPreferenceStore;
+import org.eclipse.ui.PlatformUI;
 import org.github.antlr4ide.builder.tool.AntlrToolJob;
 import org.github.antlr4ide.editor.antlr.AntlrGrammarInfo;
 import org.github.antlr4ide.editor.antlr.LexerHelper;
+import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
 public class AntlrBuilder extends IncrementalProjectBuilder {
 
@@ -90,7 +93,9 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 	@Override
 	protected IProject[] build(int kind, Map<String, String> args, IProgressMonitor monitor)
 			throws CoreException {
+		if(!checkToolEnabled()) return null;
 		System.out.println("AntlrBuilder - build - ("+toTextBuildKind(kind)+") "+args);
+		// AntlrPreferenceConstants.P_TOOL_ENABLED
 		
 		if (kind == IncrementalProjectBuilder.FULL_BUILD) {
 			fullBuild(monitor);
@@ -116,7 +121,10 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 	}
 	
 	protected void clean(IProgressMonitor monitor) throws CoreException {
+		if(!checkToolEnabled()) return;
+		
 		System.out.println("AntlrBuilder - clean ");
+		// AntlrPreferenceConstants.P_TOOL_ENABLED
 		
 		// delete markers set and files created
 		getProject().deleteMarkers(AntlrBuilder.MARKER_TYPE, true, IResource.DEPTH_INFINITE);
@@ -161,4 +169,12 @@ public class AntlrBuilder extends IncrementalProjectBuilder {
 		System.out.println("AntlrBuilder - incrementalBuild");
 		delta.accept(new AntlrDeltaVisitor());
 	}
+
+
+
+    private Boolean checkToolEnabled() {
+		IPreferenceStore ps = PlatformUI.getPreferenceStore();
+		return ps.getBoolean(AntlrPreferenceConstants.P_TOOL_ENABLED);
+    }
+
 }
