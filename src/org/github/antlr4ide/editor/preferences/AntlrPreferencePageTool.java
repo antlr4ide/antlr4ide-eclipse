@@ -120,7 +120,7 @@ public class AntlrPreferencePageTool extends FieldEditorPreferencePage implement
 			return stringList.split(del);
 		}
 		
-		
+		// Keep format in sync with AntlrToolConfig.getToolJar
 		private boolean verifyTooljar(String jarfilename, StringBuffer out)  {
 			File f=new File(jarfilename);
 			String TOOL = "org.antlr.v4.Tool"; // from ToolOptionsProvider.xtend
