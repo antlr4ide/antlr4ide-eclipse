@@ -27,18 +27,6 @@ public class AntlrToolJob extends Job {
 	         this.setPriority(BUILD);
 	         this.file=file;
 	         this.grammarInfo=info;
-	         
-	         // get meta info from the grammar
-	         // - @header { package ... }
-	         // - options { tokensVocab=... }
-	         // - import ...
-	         System.out.println("AntlrToolJob - file "+file.getName()+ " workbench windows count " + PlatformUI.getWorkbench().getWorkbenchWindowCount());
-			 System.out.println("ANTLR Document found parser"
-			 		+ " type "+info.getGrammarType()
-			 		+ " name " + info.getGrammarName()
-			 		+ " options " + info.getGrammarOptions()
-			 		+ " header " + info.getGrammarHeaders()
-			 		);
          }
       
 	public IStatus run(IProgressMonitor monitor) {
@@ -49,7 +37,7 @@ public class AntlrToolJob extends Job {
 			toolout.write("TOOL - tbd - "+file.getName()+" ... \n");
 			ProcessBuilder toolProcess=AntlrToolProcessBuilder.getProcessBuilder(this.file,this.grammarInfo);
 			toolProcess.inheritIO();
-			
+			toolout.write("Working directory "+toolProcess.directory().toString()+"\n");
 			toolout.write(toolProcess.command().toString()+"\n");
 			
 //			Redirect r= Redirect.to(file);
