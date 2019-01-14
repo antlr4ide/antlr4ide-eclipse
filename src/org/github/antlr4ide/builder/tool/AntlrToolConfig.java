@@ -11,9 +11,50 @@ import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 public class AntlrToolConfig {
 	
 	public static String getToolJar() {
-		// TODO use AntlrPreferenceConstants.P_TOOL_DISTRIBUTIONS
-		return "C:\\Users\\HenrikSorensen\\git\\antlr4\\tool\\target\\antlr4-4.7.2-SNAPSHOT-complete.jar";
+		// TODO return version ?
+		IPreferenceStore ps = PlatformUI.getPreferenceStore();
+		
+		// format of AntlrPreferenceConstants.P_TOOL_DISTRIBUTIONS
+		// see AntlrPreferencePageTool.verifyTooljar
+		// ver path, ver path ...
+		String toolDistribution=ps.getString(AntlrPreferenceConstants.P_TOOL_DISTRIBUTIONS);
+		String toolJars[] =toolDistribution.split(","); 
+		String toolJar[] = toolJars[0].split(" ");
+		
+		return toolJar[1];
 	}
+	
+	// set output directory to include the package location
+	public static List<String> getOutputdir(AntlrGrammarInfo grammarInfo) {
+		String pdir=grammarInfo.getGrammarHeaderPackageAsPath();
+		List<String> out = getStringParm("-o",AntlrPreferenceConstants.P_TOOL_OUTDIRECTORY);
+		
+		if (!pdir.isEmpty())
+		{
+			String dir=out.get(1);
+			if (dir.endsWith("/")) out.set(1, dir+pdir);
+			else out.set(1, dir+"/"+pdir);
+		}
+		
+	   return out;	
+	}
+	
+	// if grammar contain option tokenVocab=lexername include -lib packagedir
+	public static List<String> getLibdir(AntlrGrammarInfo grammarInfo) {
+		// If preferences are set use it
+		List<String> out = getStringParm("-lib",AntlrPreferenceConstants.P_TOOL_LIB);
+		if (out.size()>0) return out;
+		
+		// TODO: Fix assumption that lexer and grammer share same package
+		String tokenVocab=grammarInfo.getGrammarOptionsTokenVocab();
+		if(tokenVocab.equals("")) return out; // is empty list if P_TOOL_LIB is not set
+		
+		out = getOutputdir(grammarInfo);
+		out.set(0, "-lib"); // set option lib
+		
+		return out;
+	}
+	
 	
 	public static List<String> getToolOptions(AntlrGrammarInfo grammarInfo) {
 		ArrayList<String> out=new ArrayList<>();
@@ -43,15 +84,13 @@ public class AntlrToolConfig {
 //		 -Xlog               dump lots of logging info to antlr-timestamp.log
 //		 -Xexact-output-dir  all output goes into -o dir regardless of paths/package		
 		
-		out.addAll(getStringParm("-o",AntlrPreferenceConstants.P_TOOL_OUTDIRECTORY));
+		out.addAll(getOutputdir(grammarInfo));
 		out.addAll(getBooleanParm("-listener","-no-listener",AntlrPreferenceConstants.P_TOOL_GENLISTENER));
 		out.addAll(getBooleanParm("-visitor","-no-visitor",AntlrPreferenceConstants.P_TOOL_GENVISITOR));
 		out.addAll(getStringParm("-encoding",AntlrPreferenceConstants.P_TOOL_ENCODING));
-		out.addAll(getStringParm("-lib",AntlrPreferenceConstants.P_TOOL_LIB));
-		out.addAll(getString("-package",grammarInfo.getGrammarHeaderPackage()));
-		out.add(grammarInfo.getGrammarName4Tool());
+		out.addAll(getLibdir(grammarInfo));
 		
-		//TODO -package, depends on grammar file itself.
+		//out.addAll(getString("-package",grammarInfo.getGrammarHeaderPackage())); 
 		
 		return out;
 	}
@@ -90,4 +129,6 @@ public class AntlrToolConfig {
 		
 		return out;
 	};
+	
+	
 }

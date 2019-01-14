@@ -71,12 +71,18 @@ public class AntlrGrammarInfo {
 	public String getGrammarHeaderPackage() {
 		String ss[]=this.grammarHeaders.split("[ \\;\\{\\}\\t\\n\\r]+");
 		for(int i=0;i<ss.length;i++) {
-			System.out.println("===="+ss[i]);
 			if (ss[i].equals("package")&&(i+1)<ss.length) return ss[i+1];
 		}
 		return "";
 	}
 	
+	/**
+	 * Turn the package aaa.bbb.ccc into a path aaa/bbb/ccc
+	 * @return
+	 */
+	public String getGrammarHeaderPackageAsPath( ) {
+		return getGrammarHeaderPackage().replace(".", "/") ;
+	}
 	public String getGrammarName4Tool() {
 		// if type is "lexer" and name ends with "lexer" strip "lexer"
 		// if type is "parser" and name ends with "parser" strip "parser"
@@ -89,9 +95,16 @@ public class AntlrGrammarInfo {
 		else if(this.grammarType.startsWith("parser")&&this.grammarName.length()>6) { 
 			String s=this.grammarName.substring(this.grammarName.length()-6);
 			if(s.equalsIgnoreCase("parser")) return this.grammarName.substring(0,this.grammarName.length()-6);
-		};
-		
-		return this.grammarName;
+		};		
+		return this.grammarName;		
+	}
+	
+	public String getGrammarOptionsTokenVocab() {
+		String ss[]=this.grammarOptions.split("[ \\;\\{\\}\\t\\n\\r=]+");
+		for(int i=0;i<ss.length;i++) {
+			if (ss[i].equals("tokenVocab")&&(i+1)<ss.length) return ss[i+1];
+		}
+		return "";
 		
 	}
 }
