@@ -123,7 +123,8 @@ public class AntlrPreferencePageTool extends FieldEditorPreferencePage implement
 		// Keep format in sync with AntlrToolConfig.getToolJar
 		private boolean verifyTooljar(String jarfilename, StringBuffer out)  {
 			File f=new File(jarfilename);
-			String TOOL = "org.antlr.v4.Tool"; // from ToolOptionsProvider.xtend
+			String TOOL = "org.antlr.v4.Tool"; // TODO move to AntlrPreferenceConstants
+		
 			try {
 				JarInputStream jarjar = new JarInputStream(new FileInputStream(f));
 				Attributes attributes=jarjar.getManifest().getMainAttributes(); 
