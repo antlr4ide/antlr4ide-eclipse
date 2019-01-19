@@ -53,9 +53,9 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 			System.out.println(">>> AntlrDocOutlineOutlineContentProvider.hasChildren ("+(element==null?"null":element.getClass())+")");
 		if (element instanceof OutlineRootElement) {
 			Integer type= ((OutlineRootElement)element).getType();
-			if(type==0) return doc.getParserRules().isEmpty()==false;
-			if(type==1) return doc.getLexerRules().isEmpty()==false;
-			if(type==2) return doc.getLexerModes().isEmpty()==false;
+			if(type==0) return doc.getGrammarInfo().getParserRules().isEmpty()==false;
+			if(type==1) return doc.getGrammarInfo().getLexerRules().isEmpty()==false;
+			if(type==2) return doc.getGrammarInfo().getLexerModes().isEmpty()==false;
 		}
 		return false;
 	}
@@ -78,9 +78,9 @@ public class AntlrDocOutlineContentProvider implements ITreeContentProvider {
 		
 		if (element instanceof OutlineRootElement) {
 			Integer type= ((OutlineRootElement)element).getType();
-			if(type==0) return doc.getParserRules().keySet().toArray();
-			if(type==1) return doc.getLexerRules().keySet().toArray();
-			if(type==2) return doc.getLexerModes().keySet().toArray();
+			if(type==0) return doc.getGrammarInfo().getParserRules().keySet().toArray();
+			if(type==1) return doc.getGrammarInfo().getLexerRules().keySet().toArray();
+			if(type==2) return doc.getGrammarInfo().getLexerModes().keySet().toArray();
 		}
 		
 		return new Object[0];

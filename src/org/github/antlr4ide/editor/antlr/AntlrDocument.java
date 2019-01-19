@@ -54,7 +54,7 @@ public class AntlrDocument extends Document implements IDocument {
 //		lexerModes.clear();
 //		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
 		LexerHelper lexer = new LexerHelper(grammarInfo);
-		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
+		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scan(get());
 		processErrors(grammarInfo.getErrorList());
 //		processFolding();
 		// TODO: Check if cached parse trees is enabled by the Antlr tool
@@ -77,31 +77,6 @@ public class AntlrDocument extends Document implements IDocument {
 		return grammarInfo;
 	}
 
-
-	/**
-	 * Deprecated use getGrammarInfo.getParserRules()
-	 * @return
-	 */
-	@Deprecated
-	public Map<String,Position> getParserRules() {
-		return grammarInfo.getParserRules();
-	}
-	/**
-	 * Deprecated use getGrammarInfo.getLexerRules()
-	 * @return
-	 */
-	@Deprecated
-	public Map<String,Position> getLexerRules() {
-		return grammarInfo.getLexerRules();
-	}
-	/**
-	 * Deprecated use getGrammarInfo.getLexerModes()
-	 * @return
-	 */
-	@Deprecated
-	public Map<String, Position> getLexerModes() {
-		return grammarInfo.getLexerModes();
-	}
 
 	public void setEditor(ANTLRv4Editor editor) {
 		this.editor=editor;

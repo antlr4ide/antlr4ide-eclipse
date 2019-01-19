@@ -206,8 +206,8 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 			}
 			else { // value is false
 			 	 if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED))     this.removeFoldingStructure();
-			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE))  this.removeFoldingStructure(doc.getLexerModes().values());
-			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) this.removeFoldingStructure(doc.getParserRules().values());
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE))  this.removeFoldingStructure(doc.getGrammarInfo().getLexerModes().values());
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) this.removeFoldingStructure(doc.getGrammarInfo().getParserRules().values());
 			}
 		}
 	}

@@ -109,11 +109,11 @@ public class AntlrDocOutlineView extends ContentOutlinePage {
 		else {
 			Position pos = null;
 			if (selection.getFirstElement() instanceof String) {
-				pos = doc.getParserRules().get(selection.getFirstElement());
+				pos = doc.getGrammarInfo().getParserRules().get(selection.getFirstElement());
 				if (pos == null)
-					pos = doc.getLexerRules().get(selection.getFirstElement());
+					pos = doc.getGrammarInfo().getLexerRules().get(selection.getFirstElement());
 				if (pos == null)
-					pos = doc.getLexerModes().get(selection.getFirstElement());
+					pos = doc.getGrammarInfo().getLexerModes().get(selection.getFirstElement());
 			}
 
 			if (pos != null) {

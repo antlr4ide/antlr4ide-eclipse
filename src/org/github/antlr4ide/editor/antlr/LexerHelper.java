@@ -118,35 +118,6 @@ public class LexerHelper {
 
   	
   	
-  	
-  	@Deprecated
-      public List<Token> scanString(String s) {
-		long pot[] = new long[4];
-
-		pot[0] = System.currentTimeMillis();
-
-		ANTLRv4Lexer lexer = new ANTLRv4Lexer(CharStreams.fromString(s));
-		pot[1] = System.currentTimeMillis();
-		CommonTokenStream tokens = new CommonTokenStream(lexer);
-		ANTLRv4Parser parser = new ANTLRv4Parser(tokens);
-		parser.removeErrorListeners();
-		parser.addErrorListener(printError);
-		parser.setBuildParseTree(true);
-		ParseTree tree = parser.grammarSpec(); 
-		System.out.println(tree.toStringTree());
-		pot[2] = System.currentTimeMillis();
-		ANTLRv4Visitor visitor = new ANTLRv4Visitor();
-		visitor.visit(tree);
-		pot[3] = System.currentTimeMillis();
-
-//		System.out.println("Elapsed time " + (pot[3] - pot[0]));
-//		System.out.println("   lexer     " + (pot[1] - pot[0]));
-//		System.out.println("   parser    " + (pot[2] - pot[1]));
-//		System.out.println("   visitor   " + (pot[3] - pot[2]));
-
-		return tokens.getTokens();
-	}
-
 	public class ANTLRv4Visitor extends ANTLRv4ParserBaseVisitor<Void> {
 
 		@Override
@@ -154,9 +125,10 @@ public class LexerHelper {
 			/*
 			 * grammarSpec : DOC_COMMENT* grammarType identifier SEMI prequelConstruct* rules modeSpec* EOF
 			 */
-			
+			if(ctx.exception==null) {
 			emitGrammarName(ctx.identifier().getText());
 			emitGrammarType(ctx.grammarType().getText());
+			}
 
 			return visitChildren(ctx); // continue the visit
 		}
