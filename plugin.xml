@@ -32,6 +32,13 @@
             category="org.github.antlr4ide.Antlr4.newprefs">
             <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
         </page>    
+        <page
+            class="org.github.antlr4ide.editor.preferences.AntlrPreferenceSyntaxHighLighting"
+            id="org.github.antlr4ide.Antlr4.newprefs.syntaxcolor"
+            name="Syntax Color"
+            category="org.github.antlr4ide.Antlr4.newprefs">
+            <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
+        </page>    
   </extension>
   
 <!-- 
