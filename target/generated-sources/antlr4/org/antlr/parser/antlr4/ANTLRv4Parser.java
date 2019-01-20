@@ -141,6 +141,7 @@ public class ANTLRv4Parser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
+
 	public static class GrammarSpecContext extends ParserRuleContext {
 		public GrammarTypeContext grammarType() {
 			return getRuleContext(GrammarTypeContext.class,0);

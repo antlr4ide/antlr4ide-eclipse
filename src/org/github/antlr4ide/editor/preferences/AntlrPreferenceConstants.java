@@ -42,4 +42,7 @@ public class AntlrPreferenceConstants {
 	public static final String P_FOLDING_LEXER_MODE     = "folding.lexerMode";
 	
 	public static final String P_FOLDING_LABEL_01       = "folding.label_01";
+	
+	// Syntax Highlight Coloring
+	public static final String P_SYNTAXCOLOR_ENABLED = "syntaxcolor.enabled";
 }

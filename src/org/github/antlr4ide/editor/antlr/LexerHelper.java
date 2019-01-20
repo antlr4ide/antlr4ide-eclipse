@@ -1,12 +1,15 @@
 package org.github.antlr4ide.editor.antlr;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
-import java.util.Map;
-
 import org.antlr.parser.antlr4.ANTLRv4Lexer;
 import org.antlr.parser.antlr4.ANTLRv4Parser;
 import org.antlr.parser.antlr4.ANTLRv4ParserBaseVisitor;
 import org.antlr.v4.runtime.BaseErrorListener;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -14,21 +17,19 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Recognizer;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.Position;
 
 public class LexerHelper {
-	private Map<String, Position> parserRules;
-	private Map<String, Position> lexerRules;
-	private Map<String, Position> lexerModes;
-	private List<String> errorList;
+	private AntlrGrammarInfo grammarInfo;
 
-	public LexerHelper(Map<String, Position> parserRules, Map<String, Position> lexerRules, List<String> errorList, Map<String, Position> lexerModes) {
-		this.parserRules = parserRules;
-		this.lexerRules = lexerRules;
-		this.lexerModes = lexerModes;
-		this.errorList  = errorList;
+	public LexerHelper(AntlrGrammarInfo grammarInfo) {
+		
+		this.grammarInfo=grammarInfo;
 	}
-	
+
     BaseErrorListener printError = new BaseErrorListener() {
         @Override
         public void syntaxError(final Recognizer<?, ?> recognizer, final Object offendingSymbol,
@@ -43,16 +44,57 @@ public class LexerHelper {
     		else
     			s= line + ":" + position + "::: " + msg;
 
-        	errorList.add(s);
+    		grammarInfo.getErrorList().add(s);
         }
       };
+
+
+      
+  	public List<Token> scan(File file) {
+  		InputStream stream;
+		List<Token> out=null;
+		
+		try {
+			stream=new FileInputStream(file);
+			out=scan(CharStreams.fromStream(stream));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return out;
+	}
 	
-	public List<? extends Token> scanString(String s) {
+      
+  	public List<Token> scan(IResource resource) {
+		IFile file = (IFile) resource;
+		List<Token> out=null;
+		
+		try {
+			out=scan(CharStreams.fromStream(file.getContents()));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (CoreException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return out;
+  	}
+
+  	public List<Token> scan(String content) {
+		return scan(CharStreams.fromString(content));
+  	}
+  	
+
+
+  	public List<Token> scan(CharStream stream) {
 		long pot[] = new long[4];
 
 		pot[0] = System.currentTimeMillis();
 
-		ANTLRv4Lexer lexer = new ANTLRv4Lexer(CharStreams.fromString(s));
+		ANTLRv4Lexer lexer = new ANTLRv4Lexer(stream);
 		pot[1] = System.currentTimeMillis();
 		CommonTokenStream tokens = new CommonTokenStream(lexer);
 		ANTLRv4Parser parser = new ANTLRv4Parser(tokens);
@@ -71,20 +113,22 @@ public class LexerHelper {
 //		System.out.println("   parser    " + (pot[2] - pot[1]));
 //		System.out.println("   visitor   " + (pot[3] - pot[2]));
 
-		return tokens.getTokens();
-	}
+		return tokens.getTokens();		
+  	}
 
+  	
+  	
 	public class ANTLRv4Visitor extends ANTLRv4ParserBaseVisitor<Void> {
 
 		@Override
 		public Void visitGrammarSpec(ANTLRv4Parser.GrammarSpecContext ctx) {
 			/*
-			 * grammarSpec : DOC_COMMENT* grammarType identifier SEMI prequelConstruct*
-			 * rules modeSpec* EOF
+			 * grammarSpec : DOC_COMMENT* grammarType identifier SEMI prequelConstruct* rules modeSpec* EOF
 			 */
-
-			String id = ctx.identifier().getText(); // name of imported grammar
-//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitGrammarSpec. Grammar name >" + id + "<");
+			if(ctx.exception==null) {
+			emitGrammarName(ctx.identifier().getText());
+			emitGrammarType(ctx.grammarType().getText());
+			}
 
 			return visitChildren(ctx); // continue the visit
 		}
@@ -96,16 +140,52 @@ public class LexerHelper {
 			 * delegateGrammar : identifier ASSIGN identifier | identifier
 			 */
 
-			String id = ctx.identifier(0).getText(); // name of imported grammar
-//			String id2;
-//			if (ctx.identifier().size() > 1)
-//				id2 = ctx.identifier(1).getText();
-
-//			System.out.println(">>> LexerHelper.ANTLRv4Visitor visitDelegateGrammar. Import name >" + id + "<");
+			// TODO: Deal with multiple Delegates
+			emitDelegate(ctx.identifier(0).getText());
 
 			return visitChildren(ctx); // continue the visit
 		}
 
+		@Override
+		public Void visitOptionsSpec(ANTLRv4Parser.OptionsSpecContext ctx) {
+		/*
+		optionsSpec
+		   : OPTIONS LBRACE (option SEMI)* RBRACE
+		   ;
+
+		option
+		   : identifier ASSIGN optionValue
+		   ;
+		   */
+			emitOption(ctx.option(0).getText()); // TODO: Deal with multiple options
+			
+			return visitChildren(ctx); // continue the visit
+		}		
+		
+		public Void visitAction(ANTLRv4Parser.ActionContext ctx) {
+			/*
+			 * // Match stuff like @parser::members {int i;}
+			 * action
+			 *    : AT (actionScopeName COLONCOLON)? identifier actionBlock
+			 *    ;
+			 *
+			 * // Scope names could collide with keywords; allow them as ids for action scopes
+			 * actionScopeName
+			 *    : identifier
+			 *    | LEXER
+			 *    | PARSER
+			 *    ;
+			 * 
+			 * actionBlock
+			 *    : BEGIN_ACTION ACTION_CONTENT* END_ACTION
+			 *    ;
+			 */
+			
+			if(ctx.identifier().getText().equals("header")) emitHeader(ctx.actionBlock().getText());
+			
+			return visitChildren(ctx); // continue the visit
+		}
+		
 		@Override
 		public Void visitParserRuleSpec(ANTLRv4Parser.ParserRuleSpecContext ctx) {
 			// Track this for outline and cross references
@@ -166,13 +246,35 @@ public class LexerHelper {
 	}
 
 	private void emitParserRule(String text, Position position) {
-		parserRules.put(text, position);
+		grammarInfo.getParserRules().put(text, position);
 	}
+	
+	public void emitHeader(String header) {
+		grammarInfo.setGrammarHeaders(header);		}
+
+	public void emitOption(String option) {
+		grammarInfo.setGrammarOptions(option);	
+	}
+
+	public void emitDelegate(String delegate) {
+		grammarInfo.setGrammarDelegates(delegate);
+	}
+
+	private void emitGrammarName(String name) {
+		grammarInfo.setGrammarName(name);
+	}
+
+	private void emitGrammarType(String type) {
+		grammarInfo.setGrammarType(type);
+	}
+	
+	
 	private void emitLexerRule(String text, Position position) {
-		lexerRules.put(text, position);
+		grammarInfo.getLexerRules().put(text, position);
 	}
 	private void emitLexerMode(String text, Position position) {
-		lexerModes.put(text, position);
+		grammarInfo.getLexerModes().put(text, position);
 	}
+
 
 }

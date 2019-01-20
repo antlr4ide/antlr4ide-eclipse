@@ -13,8 +13,12 @@
             id="org.github.antlr4ide.editor.ANTLRv4Editor">
       </editor>
    </extension>
+   
+<!-- 
+ #  PREFERENCES  
+ # -->   
+   
   <extension point="org.eclipse.ui.preferencePages">
-          <!-- experimenting with new native eclipse pref pages -->
         <page
             class="org.github.antlr4ide.editor.preferences.AntlrPreferencePageTool"
             id="org.github.antlr4ide.Antlr4.newprefs"
@@ -28,5 +32,154 @@
             category="org.github.antlr4ide.Antlr4.newprefs">
             <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
         </page>    
+        <page
+            class="org.github.antlr4ide.editor.preferences.AntlrPreferenceSyntaxHighLighting"
+            id="org.github.antlr4ide.Antlr4.newprefs.syntaxcolor"
+            name="Syntax Color"
+            category="org.github.antlr4ide.Antlr4.newprefs">
+            <keywordReference id="org.github.antlr4ide.editor.keyword_Antlr4"/>
+        </page>    
   </extension>
+  
+<!-- 
+ #  NATURE and BUILDER  
+ # -->   
+  
+   <extension
+         id="antlrBuilder"
+         name="Antlr Project Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.github.antlr4ide.builder.AntlrBuilder">
+         </run>
+      </builder>
+   </extension>  
+   <extension
+         id="antlrNature"
+         name="Antlr Project Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.github.antlr4ide.builder.AntlrNature">
+         </run>
+      </runtime>
+      <builder
+            id="antlr4ide-eclipse.antlrBuilder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <category
+            name="Antlr Project Nature commands"
+            id="antlr4ide-eclipse.antlrNature.category">
+      </category>
+      <command
+            name="Add/Remove Antlre Project Nature"
+            defaultHandler="org.github.antlr4ide.builder.AddRemoveAntlrNatureHandler"
+            categoryId="antlr4ide-eclipse.antlrNature.category"
+            id="antlr4ide-eclipse.addRemoveAntlrNature">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:org.eclipse.ui.projectConfigure?after=additions">
+         <command
+               commandId="antlr4ide-eclipse.addRemoveAntlrNature"
+               label="Disable Antlr Builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <test
+                              value="antlr4ide-eclipse.antlrNature"
+                              property="org.eclipse.core.resources.projectNature">
+                        </test>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+         <command
+               commandId="antlr4ide-eclipse.addRemoveAntlrNature"
+               label="Enable Antlr Builder"
+               style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="selection">
+                  <count
+                        value="1">
+                  </count>
+                  <iterate>
+                     <adapt
+                           type="org.eclipse.core.resources.IProject">
+                        <not>
+                           <test
+                                 value="antlr4ide-eclipse.antlrNature"
+                                 property="org.eclipse.core.resources.projectNature">
+                           </test>
+                        </not>
+                     </adapt>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>  
+
+<!-- 
+ #  CONSOLE  
+ # -->   
+   <extension
+         id="antlrProblem"
+         name="Antlr Problem"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="true">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.console.consoleFactories">
+   <consoleFactory
+         class="org.github.antlr4ide.console.AntlrConsoleFactory"
+         icon="icons/console.png"
+         label="Antlr Tool">
+   </consoleFactory>         
+   </extension>   
+   
+<!-- 
+ #  LAUNCH  
+ # -->   
+  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+    <launchConfigurationType
+       id="org.github.Antlr4.tool"
+       name="Antlr4"
+       delegate="org.github.antlr4ide.builder.tool.AntlrToolLauncher"
+       delegateName="Antlr4v Launcher"
+       delegateDescription="This is the Antlrv4 launcher. It invokes the antlr tool and generate the specified output."
+       category="org.eclipse.ui.externaltools"
+       modes= "run">
+   </launchConfigurationType>
+  </extension>
+    <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+    <launchConfigurationTabGroup
+        type="org.github.Antlr4.tool"
+        class="org.github.antlr4ide.builder.tool.AntlrToolLauncherTabGroup"
+        id="org.github.Antlr4.toolTabGroup">
+    </launchConfigurationTabGroup>
+  </extension>
+   
 </plugin>

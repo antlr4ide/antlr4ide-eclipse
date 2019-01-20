@@ -119,12 +119,12 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
     // TODO: Contribute "folding" to text editor popup menu
     // TODO: Refactor all folding controls to Editor from Document
 	public void removeFoldingStructure() {
-		System.out.println("ANTLRv4Editor - removeFolderStructure - ALL");
+		System.out.println("ANTLRv4Editor - removeFoldingStructure - ALL");
 		annotationModel.removeAllAnnotations();
 	}
 
 	public void removeFoldingStructure(Collection<Position> positions) {
-		System.out.println("ANTLRv4Editor - removeFolderStructure - select positions");
+		System.out.println("ANTLRv4Editor - removeFoldingStructure - select positions");
 		for(Annotation a: oldAnnotations) {
 		    if(positions.contains(annotationModel.getPosition(a)))
 				annotationModel.removeAnnotation(a);
@@ -190,6 +190,10 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 		System.out.println("AntlrFoldingPropertyListener - processFoldingProperty " + property + " value " + value );
 		System.out.println("--- "+this.getClass());
 		System.out.println("--- "+this.getDocumentProvider());
+		
+		if(this.getDocumentProvider()==null) return; 	// too soon ?
+		
+		
 		System.out.println("--- "+this.getDocumentProvider().getClass());
 		
 		if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED)
@@ -202,8 +206,8 @@ public class ANTLRv4Editor extends TextEditor implements IAdaptable {
 			}
 			else { // value is false
 			 	 if (property.equals(AntlrPreferenceConstants.P_FOLDING_ENABLED))     this.removeFoldingStructure();
-			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE))  this.removeFoldingStructure(doc.getLexerModes().values());
-			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) this.removeFoldingStructure(doc.getParserRules().values());
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE))  this.removeFoldingStructure(doc.getGrammarInfo().getLexerModes().values());
+			else if (property.equals(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) this.removeFoldingStructure(doc.getGrammarInfo().getParserRules().values());
 			}
 		}
 	}

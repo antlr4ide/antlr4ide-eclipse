@@ -1,13 +1,13 @@
 package org.github.antlr4ide.editor.antlr;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.antlr.v4.runtime.Token;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;
@@ -17,6 +17,7 @@ import org.eclipse.jface.text.Position;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.PlatformUI;
+import org.github.antlr4ide.builder.AntlrBuilder;
 import org.github.antlr4ide.editor.ANTLRv4Editor;
 import org.github.antlr4ide.editor.preferences.AntlrPreferenceConstants;
 
@@ -29,11 +30,12 @@ public class AntlrDocument extends Document implements IDocument {
 
 
 	List<Token> antlrTokens = new ArrayList<Token>();
-	private Map<String,Position> parserRules=new HashMap<String, Position>();
-	private Map<String,Position> lexerRules=new HashMap<String, Position>();
-	private Map<String,Position> lexerModes=new HashMap<String, Position>();
-	List<String> errorList = new ArrayList<String>();
+//	private Map<String,Position> parserRules=new HashMap<String, Position>();
+//	private Map<String,Position> lexerRules=new HashMap<String, Position>();
+//	private Map<String,Position> lexerModes=new HashMap<String, Position>();
+//	List<String> errorList = new ArrayList<String>();
 	private ANTLRv4Editor editor;
+	private AntlrGrammarInfo grammarInfo;
 	
 	/**
 	 * Invoke the antlr parser and lexer for the document.
@@ -46,13 +48,16 @@ public class AntlrDocument extends Document implements IDocument {
 	 */
 	public void scan() {
 		System.out.println("AntlrDocument - scan " );
-		errorList.clear();
+		grammarInfo=new AntlrGrammarInfo();
+		grammarInfo.getErrorList().clear();
 //		parserRules.clear();
 //		lexerModes.clear();
-		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
-		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scanString(get());
-		processErrors(errorList);
+//		LexerHelper lexer = new LexerHelper(parserRules, lexerRules, errorList, lexerModes);
+		LexerHelper lexer = new LexerHelper(grammarInfo);
+		antlrTokens = (List<org.antlr.v4.runtime.Token>) lexer.scan(get());
+		processErrors(grammarInfo.getErrorList());
 //		processFolding();
+		// TODO: Check if cached parse trees is enabled by the Antlr tool
 	}
 	public void processFolding() {
 		// Update ANTLRv4Editor to match the folding properties
@@ -60,36 +65,31 @@ public class AntlrDocument extends Document implements IDocument {
 		System.out.println("AntlrDocument - processFolding folding enabled >" +val +"<");
 		if(val) {
 			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_LEXER_MODE)) 
-			{ editor.updateFoldingStructure(lexerModes.values(),true); 
+			{ editor.updateFoldingStructure(grammarInfo.getLexerModes().values(),true); 
 			}
 			if(PlatformUI.getPreferenceStore().getBoolean(AntlrPreferenceConstants.P_FOLDING_PARSER_RULE)) 
-			{ editor.updateFoldingStructure(parserRules.values(),true); 
+			{ editor.updateFoldingStructure(grammarInfo.getParserRules().values(),true); 
 			}
 		}
 	}
-	public Map<String,Position> getParserRules() {
-		return parserRules;
+	
+	public AntlrGrammarInfo getGrammarInfo() {
+		return grammarInfo;
 	}
-	public Map<String,Position> getLexerRules() {
-		return lexerRules;
-	}
-	public Map<String, Position> getLexerModes() {
-		return lexerModes;
-	}
+
+
 	public void setEditor(ANTLRv4Editor editor) {
 		this.editor=editor;
 	}
 	
 	private void processErrors(List<String>errorList) {
-		if(errorList.size()==0) return;
-		
 		System.out.println("Syntax errors ("+errorList.size() +"):" + errorList);		
 
 		try {
 		// set any error markers from the scanner
 		IEditorInput input = editor.getEditorInput();
 		IFile file = ((IFileEditorInput) input).getFile();
-		file.deleteMarkers(IMarker.PROBLEM, false, 1);
+		file.deleteMarkers(AntlrBuilder.MARKER_TYPE, false, IResource.DEPTH_ONE);
 		for (String err : errorList) {
 			// annotate resource with errors.
 			// errorlist format line:position:token.getStartIndex():token.getStopIndex():message
@@ -100,7 +100,7 @@ public class AntlrDocument extends Document implements IDocument {
 
 			String mrkAttr[] = { IMarker.SEVERITY, IMarker.LINE_NUMBER, IMarker.MESSAGE, IMarker.CHAR_START, IMarker.CHAR_END };
 			Object mrkValue[] = { IMarker.SEVERITY_ERROR, line, ss[4], start, end };
-			IMarker marker = file.createMarker(IMarker.PROBLEM);
+			IMarker marker = file.createMarker(AntlrBuilder.MARKER_TYPE);
 			marker.setAttributes(mrkAttr, mrkValue);
 		}
 	}

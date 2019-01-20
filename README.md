@@ -43,6 +43,15 @@ Supported content in the outline view
 * Lexer Rules
 * Parser Rules
 
+### Building and Launching
+The project nature and build will eventually request the plugin to build the antlr g4 file.
+
+```java
+package org.github.antlr4ide.builder;
+public class AntlrBuilder extends IncrementalProjectBuilder { ... }
+```
+
+
 
 ## Working on
 ### Folding
@@ -95,6 +104,9 @@ public String getCurrentEditorContent() {
     IDocument doc = ite.getDocumentProvider().getDocument(ite.getEditorInput());
     return doc.get();
 }
+
+// get all open editors
+PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getEditorReferences()
 ```
 
 
@@ -106,3 +118,16 @@ Searching for adding "folding" to editor context menu.
 1. [add right-click menu](https://stackoverflow.com/questions/4726328/eclipse-plugin-development-how-to-add-option-in-right-click-menu)
 1. [Custumize popup](https://www.oxygenxml.com/doc/versions/18/ug-editor/topics/api_faq_customize_author_popup.html)
 
+
+## Parallel builder, Log listner
+https://github.com/mickaelistria/eclipse-ide-parallel-builds-demo
+https://stackoverflow.com/questions/33718708/is-it-possible-to-generate-builder-code-automatically-in-eclipse-according-to-bu
+https://www.eclipse.org/articles/Article-Builders/builders.html
+
+
+## SWT Widgets samples etc
+https://www.eclipse.org/swt/
+https://www.eclipse.org/swt/snippets/
+https://www.eclipse.org/swt/javadoc.php
+[SWT: A Native Widget Toolkit for Java - Part 1 of 2](http://www.sys-con.com/node/37463)
+[SWT: A Native Widget Toolkit for Java - Part 2 of 2](http://www.sys-con.com/node/37509)
